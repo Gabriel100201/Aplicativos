@@ -7,8 +7,8 @@ import { Dependency } from './libs/dependency.js';
 
 configureDependencies();
 
-const conf = Dependency.get('conf')
-const app = express()
+const conf = Dependency.get('conf');
+const app = express();
 const router = configureMiddlewares(app);
 configureRoutes(router);
 configureSwagger(router);

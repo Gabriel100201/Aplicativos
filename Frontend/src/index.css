@@ -1,12 +1,10 @@
-:root {
-  background-color: #121212;
-  display: flex;
-  justify-content: center;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-body{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 96vh;
+:root {
+  background-color: #ffa45f;
+  opacity: 1;
+  background-image: radial-gradient(circle at center center, #f3eee9, #ffa45f), repeating-radial-gradient(circle at center center, #f3eee9, #f3eee9, 18px, transparent 36px, transparent 18px);
+  background-blend-mode: multiply;
 }
