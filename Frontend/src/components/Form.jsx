@@ -1,8 +1,19 @@
 import { useState } from 'react';
 import { login } from '../services/login';
 import '../styles/form.css'
+import FilledInput from '@mui/material/FilledInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 export const Form = () => {
+
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const [error, setError] = useState(null);
   const [successLoged, setSuccessLogin] = useState(false);
@@ -19,6 +30,7 @@ export const Form = () => {
     else {
       setError(null)
       setSuccessLogin(true)
+      console.log(response);
     }
   }
 
@@ -36,7 +48,23 @@ export const Form = () => {
           </div>
           <div className='flex flex-col gap-2'>
             <label className='text-gray-500 font-semibold' htmlFor="password">Password</label>
-            <input name='password' id='password' className='rounded-md h-12 px-5 py-3' type="password" placeholder='********' />
+            <FilledInput
+              name='password'
+              id="filled-adornment-password"
+              type={showPassword ? 'text' : 'password'}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
           </div>
           <input className='rounded-md h-12 px-5 mt-5 bg-orange-600 hover:bg-orange-500 transition-colors cursor-pointer text-white font-bold text-xl' type="submit" />
         </div>
