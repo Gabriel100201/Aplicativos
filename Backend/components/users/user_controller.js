@@ -12,6 +12,7 @@ export class UserController {
 
   async post(req,res){
     await this.userService.create(req.body);
-    res.status(204).end();
+    // Indicar que se registro correctamente
+    res.send({message: 'Se registro correctamente'});
   }
 }

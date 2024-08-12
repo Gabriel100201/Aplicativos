@@ -1,10 +1,18 @@
-import { Form } from "./components/Form"
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { NavBar } from './components/global/NavBar';
+import { Login } from './views/Login';
 
 function App() {
   return (
-    <section className="w-full h-[100vh] flex justify-center items-center flex-col ">
-      <Form />
-    </section>
+    <Router>
+      <section className='h-[100vh]'>
+        <NavBar roles={[]}></NavBar>
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='*' element={"Página no encontrada"} />
+        </Routes>
+      </section>
+    </Router>
   )
 }
 

@@ -3,8 +3,7 @@
 @tailwind utilities;
 
 :root {
-  background-color: #ffa45f;
-  opacity: 1;
-  background-image: radial-gradient(circle at center center, #f3eee9, #ffa45f), repeating-radial-gradient(circle at center center, #f3eee9, #f3eee9, 18px, transparent 36px, transparent 18px);
-  background-blend-mode: multiply;
+  background: rgb(46,14,77);
+background: linear-gradient(151deg, rgba(46,14,77,1) 0%, rgba(190,244,2,1) 30%, rgba(190,244,2,1) 61%, rgba(46,14,77,1) 100%);
+background-repeat: no-repeat;
 }

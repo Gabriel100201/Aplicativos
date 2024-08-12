@@ -8,7 +8,7 @@ export class LoginController {
 
   async post(req,res){
     const result = await this.loginService.login(req.body);
-    res.send(result);
+    res.send(result)
     //res.status(204).end();
   }
 }
