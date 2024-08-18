@@ -6,7 +6,7 @@ function App() {
   return (
     <Router>
       <section className='h-[100vh]'>
-        <NavBar roles={[]}></NavBar>
+        <NavBar roles={["admin"]}></NavBar>
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='*' element={"Página no encontrada"} />

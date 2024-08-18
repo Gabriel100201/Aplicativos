@@ -5,7 +5,7 @@ const items = [
   {
     name: "Principal",
     path: "/",
-    roles: ["admin"],
+    roles: [],
   },
   {
     name: "Login",
@@ -17,6 +17,11 @@ const items = [
     path: "/info",
     roles: ["user"],
   },
+  {
+    name: "Users",
+    path: "/users",
+    roles: ["admin"],
+  }
 ];
 
 export const NavBar = ({ roles }) => {

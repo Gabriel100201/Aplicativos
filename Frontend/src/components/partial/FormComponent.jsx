@@ -1,11 +1,13 @@
 import '../../styles/form.css'
 import { useState } from 'react';
-import { login } from '../../services/login';
+import { useNavigate } from "react-router-dom";
+
 import FilledInput from '@mui/material/FilledInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { Api } from '../../services/Api';
 
 export const FormComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,36 +16,57 @@ export const FormComponent = () => {
     event.preventDefault();
   };
 
+  const navigate = useNavigate();
+
   const [error, setError] = useState(null);
   const [successLoged, setSuccessLogin] = useState(false);
+  const [roles, setRoles] = useState([]);
 
-  const sendRequest = async (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault()
-    const formData = new FormData(evt.target);
-    const data = Object.fromEntries(formData.entries());
-    const response = await login(data);
-    if (response.error) {
-      setError(response.message)
-      setSuccessLogin(false)
+
+    const body = {
+      username: evt.target.username.value,
+      password: evt.target.password.value
     }
-    else {
-      setError(null)
-      setSuccessLogin(true)
-      console.log(response);
-    }
+
+    Api.post('login', { body })
+      .then(res => res.json())
+      .then(res => {
+        if (res.error) {
+          setError(res.message)
+          setSuccessLogin(false)
+        }
+        else {
+          Api.defaultHeaders.Authorization = `Bearer ${res.authorizationToken}`
+          setRoles(res.roles || [])
+          navigate('/home');
+        }
+      })
+      .catch(err => {
+        if (err.message) {
+          setError(err.message)
+          setSuccessLogin(false)
+        }
+        setError(String(err))
+      })
   }
 
 
   return (
-    <form className="w-1/3 bg-red-100 flex flex-col items-center rounded-lg" onSubmit={sendRequest}>
+    <form className="w-1/3 bg-red-100 flex flex-col items-center rounded-lg" onSubmit={handleSubmit}>
       <div className='w-full bg-primary-600 h-3 rounded-t-lg'></div>
       <div className='flex flex-col w-full justify-center items-center py-10'>
         <h3 className='text-primary-600 font-bold text-3xl mt-5 text-center'>Bienvenido</h3>
         <h5 className='text-center text-gray-500 mt-2'>Ingrese su información para entrar al sistema</h5>
         <div className='flex flex-col p-5 gap-3 w-2/3 mt-2'>
           <div className='flex flex-col gap-2'>
-            <label className='text-gray-500 font-semibold' htmlFor="user">UserName</label>
-            <input name='user' id='user' className='rounded-md h-12 px-5 py-3' type="text" placeholder='Usuario...' />
+            <label className='text-gray-500 font-semibold' htmlFor="username">UserName</label>
+            <FilledInput
+              name='username'
+              id="filled-adornment-username"
+              type='text'
+            />
           </div>
           <div className='flex flex-col gap-2'>
             <label className='text-gray-500 font-semibold' htmlFor="password">Password</label>

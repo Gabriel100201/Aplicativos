@@ -7,12 +7,15 @@ export const UserModel = mongoose.model(
     username: String,
     displayName: String,
     hashedPassword: String,
+    isEnabled: Boolean,
+    roles: String
   })
 );
 
 export class UserMongo{
   async getList(filters /*options*/){
-	  return UserModel.find(filters).exec();
+    return (await UserModel.find(filters).exec())
+      .map(user => user.toJSON());
  	}
 
   async create(data){

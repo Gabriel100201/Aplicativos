@@ -1,15 +1,14 @@
-import { existsSync, readFileSync, writeFileSync } from 'fs';
-import fs from 'fs/promises'
+import { existsSync, readFileSync } from 'fs';
 
 export const conf = loadConfig();
 
 function loadConfig() {
-  let data
+  let data;
   if (existsSync('config.json')) {
     data = readFileSync('./config.json');
   }
   else {
-    data = {}
+    data = {};
   }
   const global = JSON.parse(data);
 
@@ -17,7 +16,7 @@ function loadConfig() {
     data = readFileSync('./config.local.json');
   }
   else {
-    data = {}
+    data = {};
   }
   const locals = JSON.parse(data);
 
