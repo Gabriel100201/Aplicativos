@@ -55,7 +55,7 @@ export const NavBar = () => {
       if (!roles.length) {
         return item.roles.length === 0;
       }
-      console.log(roles, item.roles);
+
       return (
         item.roles.length === 0 ||
         item.roles.some((role) => roles.includes(role))

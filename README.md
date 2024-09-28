@@ -1,9 +1,8 @@
-# DesarrolloAplicativosI
+# DesarrolloAplicativos
 
-repositorio de clase
-
-- AGREGAR MIDLEWARE PARA en middleware.js
-- AGREGAR clientPort a config.json
-- Mostrar errores en el front
-- Mejorar interfaz
-- ESTILIZAR FORM
+Tareas:
+  Gabi
+    - Arreglar alta baja y modificacion de usuarios ✅
+    - Refactorizar codigo de vista de usuarios 🕥
+    - Dar estilos a vista de usuarios ⏹️
+    - Agregar backend para cargar torneos y equipos ⏹️
