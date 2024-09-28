@@ -19,6 +19,9 @@ components:
         roles:
           type: array
           example: ["admin"]
+        isEnabled:
+          type: boolean
+          example: true
 
 paths:
   /user:

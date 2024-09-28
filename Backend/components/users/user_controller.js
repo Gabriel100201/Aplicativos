@@ -16,7 +16,10 @@ export class UserController {
   async post(req, res) {
     checkPermission(req, 'admin');
     
-    await this.userService.create(req.body);
-    res.status(204).end(); 
+    await this.userService.create(req.body);   
+    res.status(200);
+    res.send({
+      message: 'User created successfully'
+    }); 
   }
 }

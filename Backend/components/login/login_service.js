@@ -32,13 +32,17 @@ export class LoginService {
     const payload = {
       username: user.username,
       displayName: user.displayName,
-      userUuid: user.uuid
+      userUuid: user.uuid,
+      roles: Array.isArray(user.roles) ? user.roles : [],
+      isEnabled: user.isEnabled
     };
-    const token = jwt.sign(payload, this.conf.jwtPassword);
+    const token = jwt.sign(payload, this.conf.jwtPassword, {
+      expiresIn: '1h',
+    });
 
     return {
       authorizationToken: token,
-      roles: user.roles?.split(',').map(role => role.trim()) ?? [],
+      roles: Array.isArray(user.roles) ? user.roles : [],
     };
   }
 }

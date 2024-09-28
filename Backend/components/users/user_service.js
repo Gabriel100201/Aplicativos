@@ -52,7 +52,9 @@ export class UserService {
     if (!data.roles) {
       throw new MissingParameterError('roles');
     }
-
+    if (!data.isEnabled) {
+      throw new MissingParameterError('isEnabled');
+    }
     if (await this.getForUsernameOrNull(data.username)) {
       throw new Error('Ese nombre de usuario ya está utilizado');
     }

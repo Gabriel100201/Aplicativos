@@ -1,14 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import { Dependency } from './libs/dependency.js';
-import {InvalidAuthorizationSchemaError} from './libs/invalid_authorization_schema_error.js';
-import {InvalidAuthorizationTokenError} from './libs/invalid_authorization_token_error.js';
+import { InvalidAuthorizationSchemaError } from './libs/invalid_authorization_schema_error.js';
+import { InvalidAuthorizationTokenError } from './libs/invalid_authorization_token_error.js';
 import jwt from 'jsonwebtoken';
 
 
 
 export function configureMiddlewares(app) {
-  const conf = Dependency.get("conf");
+  const conf = Dependency.get('conf');
   const origin = `http://localhost:${conf.clientPort}`;
 
   const corsOptions = {
@@ -20,25 +20,25 @@ export function configureMiddlewares(app) {
   app.use(cors(corsOptions));
 
   app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", origin);
+    res.header('Access-Control-Allow-Origin', origin);
     res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept'
     );
-    res.header("Access-Control-Allow-Credentials", true);
+    res.header('Access-Control-Allow-Credentials', true);
     res.header(
-      "Access-Control-Allow-Methods",
-      "GET, POST, OPTIONS, PUT, DELETE"
+      'Access-Control-Allow-Methods',
+      'GET, POST, OPTIONS, PUT, DELETE'
     );
     next();
   });
 
-  app.use("/", express.json());
+  app.use('/', express.json());
 
   const router = express.Router();
-  app.use("/api", router);
+  app.use('/api', router);
 
-  /* router.use(authorizationMiddleware); */
+  router.use(authorizationMiddleware);
 
   app.use(errorHandler); // Manejo global de errores
 
@@ -57,51 +57,44 @@ function authorizationMiddleware(req, res, next) {
   }
 
   const token = auth.substr(7).trim();
+
   if (!token) {
     throw new InvalidAuthorizationTokenError();
   }
 
   const conf = Dependency.get('conf');
-  jwt.verify(
-    token,
-    conf.jwtPassword,
-    async (err, data) => {
-      if (err) {
-        throw new InvalidAuthorizationTokenError();
-      }
+  const user = jwt.verify(token, conf.jwtPassword);
 
-      const userService = Dependency.get('userService');
-      const user = await userService.getForUsernameOrNull(data.username);
+  if (!user) {
+    throw new InvalidAuthorizationTokenError();
+  }
+  if (!user.isEnabled) {
+    throw new InvalidAuthorizationTokenError();
+  }
 
-      if (!user || !user.isEnabled) {
-        throw new InvalidAuthorizationTokenError();
-      }
+  req.user = user;
 
-      req.user = user;
-
-      next();
-    }
-  );
+  next();
 }
 
-function errorHandler (err, req, res, next){
-  if (!(err instanceof Error)){
+function errorHandler(err, req, res, next) {
+  if (!(err instanceof Error)) {
     res.status(500).send(err);
-    next ();
+    next();
     return;
   };
 
-  const statusCodes ={
-    MissingParameterError:400,
-    ConflictError:409,
-    InvalidCredentialsError:401,
+  const statusCodes = {
+    MissingParameterError: 400,
+    ConflictError: 409,
+    InvalidCredentialsError: 401,
   };
 
   const name = err.constructor.name;
   const status = statusCodes[name] ?? 500;
 
   res.status(status).send({
-    error:name,
-    message:err.message,
+    error: name,
+    message: err.message,
   });
 }

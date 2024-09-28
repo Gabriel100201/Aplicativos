@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Api } from '../../services/Api';
+import StorageService from '../../services/storageService';
 
 export const FormComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +21,6 @@ export const FormComponent = () => {
 
   const [error, setError] = useState(null);
   const [successLoged, setSuccessLogin] = useState(false);
-  const [roles, setRoles] = useState([]);
 
   const handleSubmit = async (evt) => {
     evt.preventDefault()
@@ -39,7 +39,8 @@ export const FormComponent = () => {
         }
         else {
           Api.defaultHeaders.Authorization = `Bearer ${res.authorizationToken}`
-          setRoles(res.roles || [])
+          StorageService.setItem('token', res.authorizationToken)
+          StorageService.setItem('roles', res.roles)
           navigate('/home');
         }
       })
