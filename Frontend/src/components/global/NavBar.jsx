@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import StorageService from "../../services/storageService"; // Importa el servicio de almacenamiento
+import Logo from "../../assets/icons/Logo-app.png";
 
 const items = [
   {
@@ -66,28 +67,17 @@ export const NavBar = () => {
   }, [roles, isAuthenticated, location]);
 
   return (
-    <header className="text-gray-600 body-font bg-primary-50/30 h-20">
-      <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-        <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
-            viewBox="0 0 24 24"
-          >
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-          </svg>
-          <span className="ml-3 text-xl">Ejemplo</span>
+    <header className="text-text-100 body-font bg-bg-100/20 h-20 border-b-2">
+      <div className="container mx-auto flex flex-wrap flex-col md:flex-row items-center">
+        <a className="flex title-font font-medium items-center mb-4 md:mb-0">
+          <img src={Logo} className="w-20" alt="logo" />
+          <span className="ml-3 text-xl">Futbolin</span>
         </a>
-        <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+        <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center gap-3">
           {filteredItems.map((item) => (
             <Link
               key={item.name}
-              className="mr-5 text-primary-50 font-bold hover:text-gray-900"
+              className=" flex items-center border-0 py-1 px-5 focus:outline-none text-text-100 font-bold  transition-colors hover:text-text-200"
               to={item.path}
             >
               {item.name}
@@ -103,9 +93,9 @@ export const NavBar = () => {
               setIsAuthenticated(false);
               navigate("/");
             }}
-            className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
+            className="inline-flex items-center bg-primary-300 hover:bg-primary-200 transition-colors border-0 py-1 px-3 focus:outline-none text-white font-semibold rounded text-base mt-4 md:mt-0"
           >
-            Logout
+            Cerrar Sesion
             <svg
               fill="none"
               stroke="currentColor"

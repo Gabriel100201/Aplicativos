@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { UserTable } from "../components/Users/UserTable";
 import { UserForm } from "../components/Users/UserForm";
 import { fetchUsers, createUser, updateUser, deleteUser } from "../services/userServices";
+import { FaPlus } from "react-icons/fa6";
 
 export const Users = () => {
   const [users, setUsers] = useState([]);
@@ -72,13 +73,16 @@ export const Users = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold text-center mb-4">Lista de Usuarios</h1>
+    <div className="container mx-auto p-4 mt-10">
+      <h1 className="text-3xl font-bold text-center mb-4 text-primary-300">Lista de Usuarios</h1>
       <button
         onClick={() => setShowModal(true)}
-        className="bg-blue-500 text-white px-3 py-1 rounded-md mb-4"
+        className="bg-primary-300 flex items-center hover:bg-primary-200 transition-colors justify-center gap-2 text-white px-3 py-1 rounded-md mb-4"
       >
+        <span className="font-semibold text-center">
         Crear nuevo usuario
+        </span>
+        <FaPlus />
       </button>
 
       <UserTable users={users} onEdit={handleEditUser} onDelete={handleDeleteUser} />

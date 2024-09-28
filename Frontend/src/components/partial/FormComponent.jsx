@@ -55,7 +55,7 @@ export const FormComponent = () => {
 
 
   return (
-    <form className="w-1/3 bg-red-100 flex flex-col items-center rounded-lg" onSubmit={handleSubmit}>
+    <form className="w-1/3 bg-bg-100 border-2 flex flex-col items-center rounded-lg" onSubmit={handleSubmit}>
       <div className='w-full bg-primary-600 h-3 rounded-t-lg'></div>
       <div className='flex flex-col w-full justify-center items-center py-10'>
         <h3 className='text-primary-600 font-bold text-3xl mt-5 text-center'>Bienvenido</h3>
@@ -89,7 +89,7 @@ export const FormComponent = () => {
               }
             />
           </div>
-          <input className='rounded-md h-12 px-5 mt-5 bg-primary-600 hover:bg-primary-400 transition-colors cursor-pointer text-white font-bold text-xl' type="submit" />
+          <input className='rounded-md h-12 px-5 mt-5 bg-primary-200 hover:bg-primary-100 transition-colors cursor-pointer text-white font-bold text-xl' type="submit" />
         </div>
         {
           successLoged && (
