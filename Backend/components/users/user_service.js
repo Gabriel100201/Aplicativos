@@ -52,7 +52,7 @@ export class UserService {
     if (!data.roles) {
       throw new MissingParameterError('roles');
     }
-    if (!data.isEnabled) {
+    if (data.isEnabled === undefined) {
       throw new MissingParameterError('isEnabled');
     }
     if (await this.getForUsernameOrNull(data.username)) {
@@ -63,6 +63,44 @@ export class UserService {
     data.hashedPassword = await this.hashPassword(data.password);
     delete data.password;
 
-    this.userData.create(data);
+    await this.userData.create(data);
+  }
+
+  async delete(uuid) {
+    if (!uuid) {
+      throw new MissingParameterError('uuid');
+    }
+
+    const user = await this.getForUuidOrNull(uuid);
+    if (!user) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    await this.userData.deleteByUuid(uuid);
+    return { message: 'Usuario eliminado correctamente' };
+  }
+
+  // Método para actualizar la información de un usuario
+  async update(uuid, updateData) {
+    if (!uuid) {
+      throw new MissingParameterError('uuid');
+    }
+
+    const user = await this.getForUuidOrNull(uuid);
+    if (!user) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    // Si se está actualizando la contraseña, hay que encriptarla
+    if (updateData.password) {
+      updateData.hashedPassword = await this.hashPassword(updateData.password);
+      delete updateData.password;
+    }
+
+    // Asegúrate de que no se está intentando cambiar el UUID
+    delete updateData.uuid;
+
+    const updatedUser = await this.userData.updateByUuid(uuid, updateData);
+    return updatedUser;
   }
 }

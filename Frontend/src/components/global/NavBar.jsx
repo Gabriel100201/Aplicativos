@@ -1,5 +1,4 @@
-// NavBar.js
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import StorageService from "../../services/storageService"; // Importa el servicio de almacenamiento
 
@@ -27,11 +26,13 @@ const items = [
 ];
 
 export const NavBar = () => {
+  const navigate = useNavigate();
   const [roles, setRoles] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [filteredItems, setFilteredItems] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
-    // Obtén los roles del usuario desde el localStorage
     const storedRoles = StorageService.getItem("roles");
     const token = StorageService.getItem("token");
 
@@ -42,23 +43,27 @@ export const NavBar = () => {
     if (token) {
       setIsAuthenticated(true);
     }
-  }, []);
+  }, [location]);
 
-  // Filtrado de ítems basado en los roles y estado de autenticación
-  const filteredItems = items.filter((item) => {
-    if (isAuthenticated && item.name === "Login") {
-      return false;
-    }
+  useEffect(() => {
+    // Filtrado de ítems basado en los roles y estado de autenticación
+    const filtered = items.filter((item) => {
+      if (isAuthenticated && item.name === "Login") {
+        return false;
+      }
 
-    if (!roles.length) {
-      return item.roles.length === 0;
-    }
+      if (!roles.length) {
+        return item.roles.length === 0;
+      }
+      console.log(roles, item.roles);
+      return (
+        item.roles.length === 0 ||
+        item.roles.some((role) => roles.includes(role))
+      );
+    });
 
-    return (
-      item.roles.length === 0 ||
-      item.roles.some((role) => roles.includes(role))
-    );
-  });
+    setFilteredItems(filtered);
+  }, [roles, isAuthenticated, location]);
 
   return (
     <header className="text-gray-600 body-font bg-primary-50/30 h-20">
@@ -96,6 +101,7 @@ export const NavBar = () => {
               StorageService.removeItem("roles");
               setRoles([]);
               setIsAuthenticated(false);
+              navigate("/");
             }}
             className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
           >

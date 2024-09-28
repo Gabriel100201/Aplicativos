@@ -16,10 +16,54 @@ export class UserController {
   async post(req, res) {
     checkPermission(req, 'admin');
     
-    await this.userService.create(req.body);   
-    res.status(200);
-    res.send({
-      message: 'User created successfully'
-    }); 
+    try {
+      await this.userService.create(req.body);
+      res.status(200).send({
+        message: 'User created successfully',
+      });
+    } catch (err) {
+      res.status(500).send({
+        error: 'Error',
+        message: err.message,
+      });
+    }
+  }
+
+  // Método para eliminar un usuario por uuid
+  async delete(req, res) {
+    checkPermission(req, 'admin');
+
+    const { uuid } = req.body;
+
+    try {
+      const result = await this.userService.delete(uuid);
+      res.status(200).send(result);
+    } catch (err) {
+      res.status(500).send({
+        error: 'Error',
+        message: err.message,
+      });
+    }
+  }
+
+  // Método para actualizar un usuario por uuid
+  async update(req, res) {
+    checkPermission(req, 'admin');
+
+    const { uuid } = req.body;
+    const updateData = req.body;
+
+    try {
+      const updatedUser = await this.userService.update(uuid, updateData);
+      res.status(200).send({
+        message: 'User updated successfully',
+        user: updatedUser
+      });
+    } catch (err) {
+      res.status(500).send({
+        error: 'Error',
+        message: err.message,
+      });
+    }
   }
 }
