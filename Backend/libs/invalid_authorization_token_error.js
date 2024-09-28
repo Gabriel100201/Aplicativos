@@ -1,1 +1,1 @@
-export class InvalidAuthorizationTokenError extends Error { }
+export class InvalidAuthorizationTokenError extends Error{}

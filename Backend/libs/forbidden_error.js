@@ -1,1 +1,1 @@
-export class ForbiddenError extends Error {}
+export class ForbiddenError extends Error{}

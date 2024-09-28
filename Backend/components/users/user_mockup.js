@@ -1,56 +1,54 @@
-export class UserMockup{
+export class UserMockup {
   static list = [
     {
-    	uuid: 'ff39511d-a77c-49df-9364-1f396c807285',
+      uuid: 'ff39511d-a77c-49df-936f-1234567890ab',
       username: 'Admin',
-      displayName: 'Administrator',   
-      hashedPassword: '$2b$10$FUfxuVGvTIGjCTC0VvW0C.o066yUxalHaDLWVMtHgSJn8bDEow6/y'
+      displayName: 'Administrator',
+      hashedPassword: '$2b$10$5UmYGGeKzb9L0PNtSwQIz.8sdRvKWGG9pnQ4WR5Jzk20SwsOEtQBW' // Este es solo un ejemplo, asegurate de que sea un hash valido
     },
     {
-      uuid: 'b4f64d24-610d-46d5-92e0-ff753cfe12fc',
+      uuid: 'b4f64d24-610d-46d5-92e7-1234567890ab',
       username: 'Pedro',
       displayName: 'Pedro pe',
-      hashedPassword: '$2b$10$FUfxuVGvTIGjCTC0VvW0C.o066yUxalHaDLWVMtHgSJn8bDEow6/y',
+      hashedPassword: '$2b$10$FUfxu' // Este es solo un ejemplo, asegurate de que sea un hash valido
     },
   ];
- 
 
-  async getList(filters,options){
-    const result =[];
-    if(filters){
-      for(const item of UserMockup.list){
+  async getList(filters, options) {
+    const result = [];
+
+    if (filters) {
+      for (const item of UserMockup.list) {
         let includeItem = true;
-        for(const filterName in filters){
-          const filterValue = filters[filterName]; 
-          if(item[filterName] != filterValue){
+
+        for (const filterName in filters) {
+          const filterValue = filters[filterName];
+          if (item[filterName] != filterValue) {
             includeItem = false;
             break;
           }
         }
 
-        if (includeItem){
+        if (includeItem) {
           result.push(item);
         }
-    	}
-
-    }else{
+      }
+    } else {
       result.push(...UserMockup.list);
     }
-    
 
-    if (options?.skip){
+    if (options?.skip) {
       result.splice(0, options.skip);
     }
 
-	 if (options?.limit){
-      result.splice(options.limit, result.length);
+    if (options?.limit) {
+      result.splice(options.limit, result.length - options.limit);
     }
 
     return result;
-	 }
+  }
 
-
-  create(data){
+  create(data) {
     UserMockup.list.push(data);
   }
 }

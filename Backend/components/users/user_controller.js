@@ -1,18 +1,22 @@
 import { Dependency } from '../../libs/dependency.js';
+import { checkPermission } from '../../libs/check_permision.js';
 
 export class UserController {
-  constructor(){
+  constructor() {
     this.userService = Dependency.get('userService');
   }
 
   async get(req, res) {
+    checkPermission(req, 'admin');
+    
     const userList = await this.userService.getList();
-    res.send(userList);
+    res.send(userList); 
   }
 
-  async post(req,res){
+  async post(req, res) {
+    checkPermission(req, 'admin');
+    
     await this.userService.create(req.body);
-    // Indicar que se registro correctamente
-    res.send({message: 'Se registro correctamente'});
+    res.status(204).end(); 
   }
 }

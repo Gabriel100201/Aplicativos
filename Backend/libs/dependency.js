@@ -3,16 +3,15 @@ export class Dependency {
 
   static add(name, dependency) {
     if (name in this.dependenciesList) {
-      throw new Error(`Dependency ${name} already exist.`);
+      throw new Error(`Dependency ${name} already exists.`);
     }
 
     this.dependenciesList[name] = dependency;
   }
 
-
   static get(name) {
     if (!(name in this.dependenciesList)) {
-      throw new Error(`Dependency ${name} does not exist`);
+      throw new Error(`Dependency ${name} does not exist.`);
     }
 
     let dependency = this.dependenciesList[name];
@@ -21,6 +20,5 @@ export class Dependency {
     }
 
     return dependency;
-
   }
 }

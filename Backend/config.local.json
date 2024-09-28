@@ -1,5 +1,0 @@
-{
-  "port": 4000,
-  "jwtPassword": "1234",
-  "db": "mongodb://127.0.0.1:27017/tuds-da"
-}

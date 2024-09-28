@@ -2,58 +2,87 @@ components:
   schemas:
     UserCreate:
       type: object
+      required:
+        - username
+        - displayName
+        - password
       properties:
         username:
           type: string
-          required: true
           example: test
         displayName: 
           type: string
-          required: true
           example: Test
         password:
           type: string
-          required: true
           example: 1234
+        roles:
+          type: array
+          example: ["admin"]
 
-/user:
-  get:
-    tags:
-      - User
-    summary: Get a users list
-    produce:
-      - application/json
-    parameters:
-      - name: username
-        in: query
-    responses:
-      '200': 
-        description: Success
-        content:
-          application/json:
-            type: object
-            properties:
-              username:
-                type: string
-              displayName:
-                type: String
-      '404':
-        description: Not found
-
-  post:
-    tags:
-      - User
-    summary: add a new user from body data
-    consumes:
-      - application/json
-    requestBody:
-      required: true
-      content: 
-        application/json:
+paths:
+  /user:
+    get:
+      tags:
+        - User
+      summary: Get a users list
+      produces:
+        - application/json
+      parameters:
+        - name: username
+          in: query
+          required: false
           schema:
-            $ref: '#/components/schemas/UserCreate'
-    responses:
-      '204':
-        description: no content
-      '400':
-        description: error 400
+            type: string
+      responses:
+        '200': 
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                    displayName:
+                      type: string
+        '404':
+          description: Not found
+
+    post:
+      tags:
+        - User
+      summary: Add a new user from body data
+      consumes:
+        - application/json
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '201':
+          description: User created successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid input"
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Username already exists"

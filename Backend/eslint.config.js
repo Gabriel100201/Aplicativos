@@ -1,5 +1,3 @@
-/* eslint-disable no-magic-numbers */
-
 import globals from 'globals';
 import pluginJs from '@eslint/js';
 

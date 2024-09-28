@@ -1,1 +1,1 @@
-export class InvalidAuthorizationSchemaError extends Error {}
+export class InvalidAuthorizationSchemaError extends Error{}

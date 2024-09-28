@@ -1,7 +1,7 @@
 export class ConflictError extends Error {
-  constructor(paramName) {
-    super(`${paramName}`);
-
-    this.paramName = paramName;
+  constructor(message) {
+    super(message);
+    this.name = 'ConflictError';
   }
 }
+  
