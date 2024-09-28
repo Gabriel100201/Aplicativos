@@ -1,16 +1,14 @@
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate de react-router-dom
 
 export const NotFound = () => {
-  const navigate = useNavigate(); // Hook para manejar la navegación
+  const navigate = useNavigate();
 
-  // Función para manejar el botón "Volver"
   const handleGoBack = () => {
-    navigate(-1); // Navega a la página anterior
+    navigate(-1);
   };
 
-  // Función para manejar el botón "Ir a la página principal"
   const handleGoHome = () => {
-    navigate('/'); // Cambia '/' por la ruta de tu página principal si es diferente
+    navigate('/');
   };
 
   return (

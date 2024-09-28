@@ -41,7 +41,7 @@ export const FormComponent = () => {
           Api.defaultHeaders.Authorization = `Bearer ${res.authorizationToken}`
           StorageService.setItem('token', res.authorizationToken)
           StorageService.setItem('roles', res.roles)
-          navigate('/home');
+          navigate('/');
         }
       })
       .catch(err => {
