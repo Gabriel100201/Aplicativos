@@ -182,8 +182,8 @@ export const CreateTeam = () => {
             </button>
           </form>
         </div>
-        <TeamList refreshTeams={refreshTeams} />
       </div>
+      <TeamList refreshTeams={refreshTeams} />
     </section>
   );
 };
