@@ -24,6 +24,11 @@ const items = [
     path: "/users",
     roles: ["admin"],
   },
+  {
+    name: "Crear Equipo",
+    path: "/create-team",
+    roles: ["admin"],
+  }
 ];
 
 export const NavBar = () => {
