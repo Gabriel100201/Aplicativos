@@ -20,7 +20,7 @@ export class TeamService {
   }
 
   async create(data) {
-    console.log(data);
+
     if (!data?.name) {
       throw new MissingParameterError('name');
     }

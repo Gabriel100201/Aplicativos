@@ -28,6 +28,16 @@ const items = [
     name: "Crear Equipo",
     path: "/create-team",
     roles: ["admin"],
+  },
+  {
+    name: "Crear Torneo",
+    path: "/create-tournament",
+    roles: ["admin"],
+  },
+  {
+    name: "Torneos",
+    path: "/tournaments",
+    roles: ["admin"],
   }
 ];
 

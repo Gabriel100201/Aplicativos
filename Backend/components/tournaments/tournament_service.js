@@ -1,23 +1,14 @@
 import { Dependency } from '../../libs/dependency.js';
 import { MissingParameterError } from '../../libs/missing_parameter_error.js';
-import * as uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export class TournamentService {
   constructor() {
     this.tournamentData = Dependency.get('tournamentData');
-    this.teamService = Dependency.get('teamService'); // Para cargar equipos
   }
 
-  async getList(filters, options) {
-    return this.tournamentData.getList(filters, options);
-  }
-
-  async getForUuidOrNull(uuid) {
-    const tournamentList = await this.tournamentData.getList({ uuid });
-    if (tournamentList.length) {
-      return tournamentList[0];
-    }
-    return null;
+  async getList(filters = {}) {
+    return this.tournamentData.getList(filters);
   }
 
   async create(data) {
@@ -28,29 +19,15 @@ export class TournamentService {
       throw new MissingParameterError('teams');
     }
 
-    data.uuid = uuid.v4();
-    await this.tournamentData.create(data);
-  }
+    const newTournament = {
+      uuid: uuidv4(),
+      name: data.name,
+      description: data.description || '',
+      teams: data.teams,
+      matches: [],
+    };
 
-  async generateMatches(uuid) {
-    const tournament = await this.getForUuidOrNull(uuid);
-    if (!tournament) {
-      throw new Error('Torneo no encontrado');
-    }
-
-    // Generar enfrentamientos (todos contra todos)
-    const matches = [];
-    for (let i = 0; i < tournament.teams.length; i++) {
-      for (let j = i + 1; j < tournament.teams.length; j++) {
-        matches.push({ teamA: tournament.teams[i], teamB: tournament.teams[j], result: null });
-      }
-    }
-
-    // Guardar los enfrentamientos en el torneo
-    tournament.matches = matches;
-    await this.tournamentData.updateByUuid(uuid, { matches });
-
-    return matches;
+    return await this.tournamentData.create(newTournament);
   }
 
   async delete(uuid) {
@@ -58,12 +35,11 @@ export class TournamentService {
       throw new MissingParameterError('uuid');
     }
 
-    const tournament = await this.getForUuidOrNull(uuid);
-    if (!tournament) {
+    const deletedTournament = await this.tournamentData.deleteByUuid(uuid);
+    if (!deletedTournament) {
       throw new Error('Torneo no encontrado');
     }
 
-    await this.tournamentData.deleteByUuid(uuid);
     return { message: 'Torneo eliminado correctamente' };
   }
 
@@ -72,12 +48,24 @@ export class TournamentService {
       throw new MissingParameterError('uuid');
     }
 
-    const tournament = await this.getForUuidOrNull(uuid);
-    if (!tournament) {
+    const updatedTournament = await this.tournamentData.updateByUuid(uuid, updateData);
+    if (!updatedTournament) {
       throw new Error('Torneo no encontrado');
     }
 
-    const updatedTournament = await this.tournamentData.updateByUuid(uuid, updateData);
     return updatedTournament;
+  }
+
+  async getForUuid(uuid) {
+    return this.tournamentData.getForUuid(uuid);
+  }
+
+  // Guardar los resultados de los partidos
+  async saveResults(uuid, matches) {
+    if (!uuid || !matches) {
+      throw new MissingParameterError('uuid o matches');
+    }
+
+    return this.tournamentData.saveResults(uuid, matches);
   }
 }

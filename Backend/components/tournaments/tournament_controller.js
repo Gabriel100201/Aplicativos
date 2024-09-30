@@ -17,9 +17,10 @@ export class TournamentController {
     checkPermission(req, 'admin');
 
     try {
-      await this.tournamentService.create(req.body);
+      const tournamentId = await this.tournamentService.create(req.body);
       res.status(200).send({
         message: 'Tournament created successfully',
+        uuid: tournamentId
       });
     } catch (err) {
       res.status(500).send({
@@ -65,17 +66,34 @@ export class TournamentController {
     }
   }
 
-  async generateMatches(req, res) {
+  // Guardar los resultados de los partidos
+  async saveResults(req, res) {
     checkPermission(req, 'admin');
 
-    const { uuid } = req.body;
+    const { uuid } = req.params;
+    const { matches } = req.body;
+    
+    try {
+      const updatedTournament = await this.tournamentService.saveResults(uuid, matches);
+      res.status(200).send({
+        message: 'Results saved successfully',
+        tournament: updatedTournament
+      });
+    } catch (err) {
+      res.status(500).send({
+        error: 'Error',
+        message: err.message,
+      });
+    }
+  }
+
+  async getForUuid(req, res) {
+    checkPermission(req, 'admin');
+    const { uuid } = req.params;
 
     try {
-      const matches = await this.tournamentService.generateMatches(uuid);
-      res.status(200).send({
-        message: 'Matches generated successfully',
-        matches
-      });
+      const tournament = await this.tournamentService.getForUuid(uuid);
+      res.status(200).send(tournament);
     } catch (err) {
       res.status(500).send({
         error: 'Error',

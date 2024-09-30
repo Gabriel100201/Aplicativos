@@ -18,7 +18,7 @@ export class TeamController {
 
     try {
       await this.teamService.create(req.body);
-      console.log(req.body);
+
       res.status(200).send({
         message: 'Team created successfully',
       });

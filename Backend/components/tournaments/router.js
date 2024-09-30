@@ -7,4 +7,6 @@ export function configureTournamentRoutes(router) {
   router.post('/tournament/delete', asyncHandler(TournamentController, 'delete'));
   router.post('/tournament/update', asyncHandler(TournamentController, 'update'));
   router.post('/tournament/generate-matches', asyncHandler(TournamentController, 'generateMatches'));
+  router.post('/tournament/:uuid', asyncHandler(TournamentController, 'getForUuid'));
+  router.post('/tournament/:uuid/save-results', asyncHandler(TournamentController, 'saveResults'));
 }
