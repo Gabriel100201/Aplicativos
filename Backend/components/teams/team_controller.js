@@ -32,8 +32,8 @@ export class TeamController {
 
   async delete(req, res) {
     checkPermission(req, 'admin');
-
-    const { uuid } = req.body;
+    
+    const { uuid } = req.params;
 
     try {
       const result = await this.teamService.delete(uuid);

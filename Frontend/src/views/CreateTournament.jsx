@@ -73,7 +73,7 @@ export const CreateTournament = () => {
       const data = await response.json();
       if (response.ok) {
         alert("Partidos generados con éxito");
-        navigate(`/tournament/${tournamentUuid}`); // Navega a la vista de detalle del torneo
+        navigate(`/tournaments/${tournamentUuid}`); // Navega a la vista de detalle del torneo
       } else {
         throw new Error(data.message);
       }

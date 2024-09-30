@@ -101,6 +101,7 @@ export class TournamentMongo {
     }
   }
 
+  // Guardar los resultados de los partidos
   async saveResults(uuid, matches) {
     try {
       const tournament = await TournamentModel.findOneAndUpdate(
@@ -116,6 +117,38 @@ export class TournamentMongo {
       return tournament;
     } catch (error) {
       throw new Error(`Error al guardar los resultados: ${error.message}`);
+    }
+  }
+
+  // Generar partidos al azar en formato de liga
+  async generateMatches(uuid) {
+    try {
+      const tournament = await TournamentModel.findOne({ uuid }).exec();
+      if (!tournament) {
+        throw new Error(`Torneo con UUID: ${uuid} no encontrado`);
+      }
+
+      const teams = tournament.teams;
+      const matches = [];
+
+      for (let i = 0; i < teams.length; i++) {
+        for (let j = i + 1; j < teams.length; j++) {
+          matches.push({
+            teamA: teams[i],
+            teamB: teams[j],
+            result: '',
+            winner: ''
+          });
+        }
+      }
+
+      // Actualizar los partidos generados en el torneo
+      tournament.matches = matches;
+      await TournamentModel.updateOne({ uuid }, { matches }).exec();
+
+      return matches;
+    } catch (error) {
+      throw new Error(`Error al generar los partidos: ${error.message}`);
     }
   }
 }

@@ -66,6 +66,25 @@ export class TournamentController {
     }
   }
 
+  async generateMatches(req, res) {
+    checkPermission(req, 'admin');
+
+    const { uuid } = req.body;
+
+    try {
+      const matches = await this.tournamentService.generateMatches(uuid);
+      res.status(200).send({
+        message: 'Matches generated successfully',
+        matches,
+      });
+    } catch (err) {
+      res.status(500).send({
+        error: 'Error',
+        message: err.message,
+      });
+    }
+  }
+
   // Guardar los resultados de los partidos
   async saveResults(req, res) {
     checkPermission(req, 'admin');
