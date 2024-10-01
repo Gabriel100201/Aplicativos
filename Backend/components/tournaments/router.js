@@ -9,4 +9,5 @@ export function configureTournamentRoutes(router) {
   router.post('/tournament/generate-matches', asyncHandler(TournamentController, 'generateMatches'));
   router.post('/tournament/:uuid', asyncHandler(TournamentController, 'getForUuid'));
   router.post('/tournament/:uuid/save-results', asyncHandler(TournamentController, 'saveResults'));
+  router.post('/get-positions/:uuid', asyncHandler(TournamentController, 'getPositions'));
 }

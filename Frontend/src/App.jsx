@@ -9,6 +9,7 @@ import { NotFound } from './components/global/404Error';
 import { CreateTournament } from './views/CreateTournament';
 import TournamentsList from './views/TournamentsList';
 import TournamentDetail from './views/TournamentDetails';
+import PositionsTable from './views/PositionTable';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path='/partidos' element={<LigaProfesional/>} />
           <Route path='/tournaments' element={<TournamentsList />} />
           <Route path='/tournaments/:tournamentId' element={<TournamentDetail />} />
+          <Route path='/positions' element={<PositionsTable />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </section>

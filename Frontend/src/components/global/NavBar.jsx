@@ -15,11 +15,6 @@ const items = [
     roles: [],
   },
   {
-    name: "Info",
-    path: "/info",
-    roles: ["user", "admin"],
-  },
-  {
     name: "Users",
     path: "/users",
     roles: ["admin"],
@@ -38,6 +33,11 @@ const items = [
     name: "Torneos",
     path: "/tournaments",
     roles: ["admin"],
+  },
+  {
+    name: "Posiciones",
+    path: "/positions",
+    roles: ["admin", "user"],
   }
 ];
 

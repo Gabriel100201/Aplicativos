@@ -6,17 +6,24 @@ export const TournamentDetail = () => {
   const { tournamentId } = useParams(); // Obtener el ID del torneo desde la URL
   const [tournament, setTournament] = useState(null);
   const [matches, setMatches] = useState([]);
-
+  const [fetchTournaments, setFetchTournaments] = useState(false);
   // Función para obtener los detalles del torneo desde el backend
   const fetchTournamentDetails = async () => {
     try {
       const response = await Api.post(`tournament/${tournamentId}`);
       const data = await response.json();
 
-
       if (response.ok) {
+        // Formatear los partidos para dividir el resultado inicial (si existe)
+        const formattedMatches = data.matches.map((match) => {
+          if (match.result) {
+            const [resultA, resultB] = match.result.split("-").map(Number);
+            return { ...match, resultA, resultB };
+          }
+          return match;
+        });
         setTournament(data);
-        setMatches(data.matches); // Suponiendo que la respuesta incluye los partidos
+        setMatches(formattedMatches); // Suponiendo que la respuesta incluye los partidos
       } else {
         throw new Error(data.message);
       }
@@ -29,7 +36,7 @@ export const TournamentDetail = () => {
   useEffect(() => {
     fetchTournamentDetails();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tournamentId]);
+  }, [tournamentId, fetchTournaments]);
 
   const handleResultChange = (index, team, value) => {
     const updatedMatches = [...matches];
@@ -44,6 +51,17 @@ export const TournamentDetail = () => {
       const resultB = parseInt(match.resultB, 10);
 
       // Definir el formato del resultado (por ejemplo, "1-0")
+      if (isNaN(resultA) || isNaN(resultB)) {
+        const result = ""
+        const winner = "";
+        return {
+          _id: match._id,
+          teamA: match.teamA.uuid,
+          teamB: match.teamB.uuid,
+          result,
+          winner,
+        };
+      }
       const result = `${resultA}-${resultB}`;
 
       // Determinar el ganador o si fue un empate
@@ -56,6 +74,8 @@ export const TournamentDetail = () => {
 
       return {
         _id: match._id,
+        teamA: match.teamA.uuid,
+        teamB: match.teamB.uuid,
         result,
         winner,
       };
@@ -63,7 +83,6 @@ export const TournamentDetail = () => {
 
     try {
       // Enviar los resultados formateados al backend
-
       const response = await Api.post(`tournament/${tournamentId}/save-results`, {
         body: { matches: formattedMatches },
       });
@@ -71,6 +90,7 @@ export const TournamentDetail = () => {
 
       if (response.ok) {
         alert("Resultados guardados correctamente");
+        setFetchTournaments(!fetchTournaments);
       } else {
         throw new Error(data.message);
       }
@@ -103,23 +123,34 @@ export const TournamentDetail = () => {
                 <div className="flex space-x-4">
                   <div>
                     <label className="block text-sm">Resultado {match.teamA.name}</label>
-                    <input
-                      type="number"
-                      min="0"
-                      value={match.resultA || ""}
-                      onChange={(e) => handleResultChange(index, "resultA", e.target.value)}
-                      className="border border-gray-300 rounded p-2 w-full"
-                    />
+                    {/* Mostrar el resultado si existe, de lo contrario permitir la edición */}
+                    {match.result ? (
+                      <span>{match.result.split("-")[0]}</span>
+                    ) : (
+                        <input
+                          type="number"
+                          min="0"
+                          value={match.resultA || ""}
+                          onChange={(e) => handleResultChange(index, "resultA", e.target.value)}
+                          className="border border-gray-300 rounded p-2 w-full"
+                          disabled={!!match.result}
+                        />
+                    )}
                   </div>
                   <div>
                     <label className="block text-sm">Resultado {match.teamB.name}</label>
-                    <input
-                      type="number"
-                      min="0"
-                      value={match.resultB || ""}
-                      onChange={(e) => handleResultChange(index, "resultB", e.target.value)}
-                      className="border border-gray-300 rounded p-2 w-full"
-                    />
+                    {match.result ? (
+                      <span>{match.result.split("-")[1]}</span>
+                    ) : (
+                        <input
+                          type="number"
+                          min="0"
+                          value={match.resultB || ""}
+                          onChange={(e) => handleResultChange(index, "resultB", e.target.value)}
+                          className="border border-gray-300 rounded p-2 w-full"
+                          disabled={!!match.result}
+                        />
+                    )}
                   </div>
                 </div>
               </div>

@@ -120,4 +120,19 @@ export class TournamentController {
       });
     }
   }
+
+  async getPositions(req, res) {
+    checkPermission(req, 'admin');
+    const { uuid } = req.params;
+
+    try {
+      const positions = await this.tournamentService.getPositions(uuid);
+      res.status(200).send(positions);
+    } catch (err) {
+      res.status(500).send({
+        error: 'Error',
+        message: err.message,
+      });
+    }
+  }
 }

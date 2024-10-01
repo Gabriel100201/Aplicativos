@@ -151,4 +151,84 @@ export class TournamentMongo {
       throw new Error(`Error al generar los partidos: ${error.message}`);
     }
   }
+
+  // Obtener la tabla de posiciones en formato de liga
+  // Obtener la tabla de posiciones en formato de liga
+  async getPositions(uuid) {
+    try {
+      const tournament = await TournamentModel.findOne({ uuid }).exec();
+      if (!tournament) {
+        throw new Error(`Torneo con UUID: ${uuid} no encontrado`);
+      }
+
+      const teams = tournament.teams;
+      const matches = tournament.matches;
+
+      // Crear un objeto para almacenar las posiciones de cada equipo
+      const positions = {};
+
+      // Iterar sobre los equipos y obtener su información
+      for (const teamUuid of teams) {
+        const team = await TeamModel.findOne({ uuid: teamUuid }).exec();  // Obtener el equipo por su UUID
+        positions[teamUuid] = {
+          team: teamUuid,  // Guardamos el uuid del equipo
+          name: team ? team.name : 'Equipo no encontrado',  // Guardamos el nombre del equipo
+          points: 0,
+          matches: 0,
+          wins: 0,
+          draws: 0,
+          losses: 0,
+          goalsFor: 0,
+          goalsAgainst: 0,
+          goalDifference: 0
+        };
+      }
+
+      // Iterar sobre los partidos y actualizar las estadísticas
+      for (const match of matches) {
+        const { teamA, teamB, result } = match;
+
+        if (result) {
+          const [teamAResult, teamBResult] = result.split('-').map(Number);  // Convertir a números
+
+          // Actualizar estadísticas de los equipos en cada partido
+          positions[teamA].matches++;
+          positions[teamB].matches++;
+
+          positions[teamA].goalsFor += teamAResult;
+          positions[teamA].goalsAgainst += teamBResult;
+          positions[teamB].goalsFor += teamBResult;
+          positions[teamB].goalsAgainst += teamAResult;
+
+          if (teamAResult > teamBResult) {
+            positions[teamA].points += 3;
+            positions[teamA].wins++;
+            positions[teamB].losses++;
+          } else if (teamAResult < teamBResult) {
+            positions[teamB].points += 3;
+            positions[teamB].wins++;
+            positions[teamA].losses++;
+          } else {
+            positions[teamA].points++;
+            positions[teamB].points++;
+            positions[teamA].draws++;
+            positions[teamB].draws++;
+          }
+
+          positions[teamA].goalDifference = positions[teamA].goalsFor - positions[teamA].goalsAgainst;
+          positions[teamB].goalDifference = positions[teamB].goalsFor - positions[teamB].goalsAgainst;
+        }
+      }
+
+      // Convertir el objeto a un array ordenado por puntos
+      const sortedPositions = Object.values(positions).sort(
+        (a, b) => b.points - a.points || b.goalDifference - a.goalDifference
+      );
+
+      return sortedPositions;
+    } catch (error) {
+      throw new Error(`Error al obtener la tabla: ${error.message}`);
+    }
+  }
+
 }

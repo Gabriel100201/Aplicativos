@@ -73,4 +73,8 @@ export class TournamentService {
 
     return this.tournamentData.saveResults(uuid, matches);
   }
+
+  async getPositions(uuid) {
+    return this.tournamentData.getPositions(uuid);
+  }
 }
