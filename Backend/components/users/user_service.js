@@ -80,7 +80,6 @@ export class UserService {
     return { message: 'Usuario eliminado correctamente' };
   }
 
-  // Método para actualizar la información de un usuario
   async update(uuid, updateData) {
     if (!uuid) {
       throw new MissingParameterError('uuid');
@@ -91,13 +90,11 @@ export class UserService {
       throw new Error('Usuario no encontrado');
     }
 
-    // Si se está actualizando la contraseña, hay que encriptarla
     if (updateData.password) {
       updateData.hashedPassword = await this.hashPassword(updateData.password);
       delete updateData.password;
     }
 
-    // Asegúrate de que no se está intentando cambiar el UUID
     delete updateData.uuid;
 
     const updatedUser = await this.userData.updateByUuid(uuid, updateData);

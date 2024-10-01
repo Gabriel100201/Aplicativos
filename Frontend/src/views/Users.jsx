@@ -8,7 +8,7 @@ export const Users = () => {
   const [users, setUsers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null); // Estado para manejar el usuario seleccionado
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const loadUsers = () => {
     fetchUsers()
@@ -22,11 +22,16 @@ export const Users = () => {
 
   const handleCreateUser = (e) => {
     e.preventDefault();
+
+    const selectedRoles = Array.from(e.target.roles)
+      .filter((checkbox) => checkbox.checked)
+      .map((checkbox) => checkbox.value);
+
     const newUser = {
       username: e.target.username.value,
       password: e.target.password.value,
       displayName: e.target.displayName.value,
-      roles: e.target.roles.value.split(","),
+      roles: selectedRoles,
       isEnabled: e.target.isEnabled.checked,
     };
 
@@ -37,6 +42,7 @@ export const Users = () => {
       })
       .catch((error) => console.error(error.message));
   };
+
 
   const handleDeleteUser = (uuid) => {
     deleteUser(uuid)
@@ -57,10 +63,15 @@ export const Users = () => {
 
   const handleUpdateUser = (e) => {
     e.preventDefault();
+
+    const selectedRoles = Array.from(e.target.roles)
+      .filter((checkbox) => checkbox.checked)
+      .map((checkbox) => checkbox.value);
+
     const updatedUser = {
       ...selectedUser,
       displayName: e.target.displayName.value,
-      roles: e.target.roles.value.split(","),
+      roles: selectedRoles,
       isEnabled: e.target.isEnabled.checked,
     };
 
@@ -71,6 +82,7 @@ export const Users = () => {
       })
       .catch((error) => console.error("Error al actualizar el usuario:", error.message));
   };
+
 
   return (
     <div className="container mx-auto p-4 mt-10">

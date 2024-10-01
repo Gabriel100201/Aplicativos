@@ -6,7 +6,6 @@ import { FaTrash } from "react-icons/fa";
 export const TeamList = ({ refreshTeams }) => {
   const [teams, setTeams] = useState([]);
 
-  // Función para obtener todos los equipos del backend
   const fetchTeams = async () => {
     try {
       const response = await Api.get('team');
@@ -22,12 +21,10 @@ export const TeamList = ({ refreshTeams }) => {
     }
   };
 
-  // Obtener los equipos al montar el componente
   useEffect(() => {
     fetchTeams();
   }, [refreshTeams]);
 
-  // Función para eliminar un equipo
   const handleDelete = async (id) => {
     const teamId = id;
     try {

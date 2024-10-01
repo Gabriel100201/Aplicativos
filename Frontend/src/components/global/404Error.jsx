@@ -39,7 +39,6 @@ export const NotFound = () => {
           </p>
 
           <div className="flex items-center w-full mt-6 gap-x-3 shrink-0 sm:w-auto">
-            {/* Botón para volver a la página anterior */}
             <button
               className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bgWhite border roundedLg gap-x-2 sm:w-auto hover:bg-gray-100"
               onClick={handleGoBack}
@@ -61,7 +60,6 @@ export const NotFound = () => {
               <span>Volver</span>
             </button>
 
-            {/* Botón para ir a la página principal */}
             <button
               className="w-1/2 px-5 py-2 text-sm trackingWide text-white transition-colors duration-200 bg-primary-300 roundedLg shrink-0 sm:w-auto hover:bg-primary-200"
               onClick={handleGoHome}

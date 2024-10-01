@@ -8,10 +8,9 @@ export const TournamentsWithPositions = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Función para obtener la lista de torneos
   const fetchTournaments = async () => {
     try {
-      const response = await Api.get("tournament"); // Asegúrate de que este endpoint devuelve todos los torneos
+      const response = await Api.get("tournament");
       const data = await response.json();
 
       if (response.ok) {
@@ -24,7 +23,6 @@ export const TournamentsWithPositions = () => {
     }
   };
 
-  // Función para obtener la tabla de posiciones de un torneo
   const fetchPositions = async (tournamentId) => {
     setLoading(true);
     try {
@@ -34,7 +32,7 @@ export const TournamentsWithPositions = () => {
       console.log(data);
       if (response.ok) {
         setPositions(data);
-        setSelectedTournament(tournamentId); // Establecer el torneo seleccionado
+        setSelectedTournament(tournamentId);
       } else {
         throw new Error(data.message);
       }
@@ -45,7 +43,6 @@ export const TournamentsWithPositions = () => {
     }
   };
 
-  // Obtener la lista de torneos al cargar el componente
   useEffect(() => {
     fetchTournaments();
   }, []);
@@ -56,7 +53,6 @@ export const TournamentsWithPositions = () => {
         Torneos
       </h2>
 
-      {/* Lista de torneos */}
       <div className="flex justify-center mb-6">
         <select
           className="border border-gray-300 rounded-md p-2"
@@ -71,7 +67,6 @@ export const TournamentsWithPositions = () => {
         </select>
       </div>
 
-      {/* Mostrar tabla de posiciones si se seleccionó un torneo */}
       {selectedTournament && (
         <>
           <h3 className="text-xl font-semibold text-gray-600 mb-4 text-center">

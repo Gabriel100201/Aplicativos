@@ -1,19 +1,18 @@
 import mongoose, { Schema } from 'mongoose';
 import { TeamModel } from '../teams/teams_models.js';
 
-// Definición del modelo de torneo
 export const TournamentModel = mongoose.model(
   'Tournament',
   new Schema({
     uuid: { type: String, required: true, unique: true },
     name: { type: String, required: true },
-    teams: [{ type: String, ref: 'Team' }], // Lista de equipos participantes (referencia a Team)
+    teams: [{ type: String, ref: 'Team' }],
     matches: [
       {
         teamA: { type: String, ref: 'Team' },
         teamB: { type: String, ref: 'Team' },
-        result: String,  // Ejemplo: "1-0"
-        winner: String,  // UUID del equipo ganador o "draw"
+        result: String,
+        winner: String,
       }
     ],
     description: { type: String },
@@ -101,7 +100,6 @@ export class TournamentMongo {
     }
   }
 
-  // Guardar los resultados de los partidos
   async saveResults(uuid, matches) {
     try {
       const tournament = await TournamentModel.findOneAndUpdate(
@@ -120,7 +118,6 @@ export class TournamentMongo {
     }
   }
 
-  // Generar partidos al azar en formato de liga
   async generateMatches(uuid) {
     try {
       const tournament = await TournamentModel.findOne({ uuid }).exec();
@@ -142,7 +139,6 @@ export class TournamentMongo {
         }
       }
 
-      // Actualizar los partidos generados en el torneo
       tournament.matches = matches;
       await TournamentModel.updateOne({ uuid }, { matches }).exec();
 
@@ -152,8 +148,6 @@ export class TournamentMongo {
     }
   }
 
-  // Obtener la tabla de posiciones en formato de liga
-  // Obtener la tabla de posiciones en formato de liga
   async getPositions(uuid) {
     try {
       const tournament = await TournamentModel.findOne({ uuid }).exec();
@@ -164,15 +158,13 @@ export class TournamentMongo {
       const teams = tournament.teams;
       const matches = tournament.matches;
 
-      // Crear un objeto para almacenar las posiciones de cada equipo
       const positions = {};
 
-      // Iterar sobre los equipos y obtener su información
       for (const teamUuid of teams) {
-        const team = await TeamModel.findOne({ uuid: teamUuid }).exec();  // Obtener el equipo por su UUID
+        const team = await TeamModel.findOne({ uuid: teamUuid }).exec(); 
         positions[teamUuid] = {
-          team: teamUuid,  // Guardamos el uuid del equipo
-          name: team ? team.name : 'Equipo no encontrado',  // Guardamos el nombre del equipo
+          team: teamUuid,  
+          name: team ? team.name : 'Equipo no encontrado',
           points: 0,
           matches: 0,
           wins: 0,
@@ -184,14 +176,12 @@ export class TournamentMongo {
         };
       }
 
-      // Iterar sobre los partidos y actualizar las estadísticas
       for (const match of matches) {
         const { teamA, teamB, result } = match;
 
         if (result) {
-          const [teamAResult, teamBResult] = result.split('-').map(Number);  // Convertir a números
+          const [teamAResult, teamBResult] = result.split('-').map(Number);
 
-          // Actualizar estadísticas de los equipos en cada partido
           positions[teamA].matches++;
           positions[teamB].matches++;
 
@@ -220,7 +210,6 @@ export class TournamentMongo {
         }
       }
 
-      // Convertir el objeto a un array ordenado por puntos
       const sortedPositions = Object.values(positions).sort(
         (a, b) => b.points - a.points || b.goalDifference - a.goalDifference
       );

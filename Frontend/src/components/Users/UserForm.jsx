@@ -5,6 +5,21 @@ export const UserForm = ({
   onCancel,
   isEdit = false,
 }) => {
+  const roleOptions = ["admin", "user", "superadmin"];
+
+  const handleRoleChange = (e) => {
+    const { value, checked } = e.target;
+    const currentRoles = new Set(initialUser.roles || []);
+
+    if (checked && value !== "") {
+      currentRoles.add(value);
+    } else {
+      currentRoles.delete(value);
+    }
+
+    initialUser.roles = Array.from(currentRoles).filter(Boolean);
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
       <div className="bg-white p-6 rounded-lg shadow-lg w-1/2">
@@ -47,16 +62,27 @@ export const UserForm = ({
               required
             />
           </div>
+
+          {/* Checkboxes para seleccionar roles */}
           <div className="mb-4">
-            <label className="block mb-2">Roles (separados por comas)</label>
-            <input
-              type="text"
-              id="roles"
-              name="roles"
-              defaultValue={initialUser.roles?.join(",") || ""}
-              className="w-full border px-3 py-2 rounded"
-            />
+            <label className="block mb-2">Roles</label>
+            <div className="flex flex-wrap gap-2">
+              {roleOptions.map((role) => (
+                <label key={role} className="inline-flex items-center">
+                  <input
+                    type="checkbox"
+                    name="roles"
+                    value={role}
+                    defaultChecked={initialUser.roles?.includes(role)}
+                    onChange={handleRoleChange}
+                    className="mr-2"
+                  />
+                  {role}
+                </label>
+              ))}
+            </div>
           </div>
+
           <div className="mb-4">
             <label className="block mb-2">¿Está habilitado?</label>
             <input
@@ -66,6 +92,7 @@ export const UserForm = ({
               defaultChecked={initialUser.isEnabled || false}
             />
           </div>
+
           <div className="flex justify-end">
             <button
               type="button"

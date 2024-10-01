@@ -84,7 +84,6 @@ export class TournamentController {
     }
   }
 
-  // Guardar los resultados de los partidos
   async saveResults(req, res) {
     checkPermission(req, 'admin');
 

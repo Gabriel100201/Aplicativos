@@ -5,11 +5,10 @@ import { useNavigate } from "react-router-dom";
 export const CreateTournament = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [selectedTeams, setSelectedTeams] = useState([]); // Equipos seleccionados para el torneo
-  const [teams, setTeams] = useState([]); // Todos los equipos disponibles
+  const [selectedTeams, setSelectedTeams] = useState([]);
+  const [teams, setTeams] = useState([]);
   const navigate = useNavigate();
 
-  // Función para obtener la lista de equipos desde el backend
   const fetchTeams = async () => {
     try {
       const response = await Api.get("team");
@@ -24,12 +23,10 @@ export const CreateTournament = () => {
     }
   };
 
-  // Obtener los equipos al montar el componente
   useEffect(() => {
     fetchTeams();
   }, []);
 
-  // Manejar el envío del formulario para crear el torneo
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -53,7 +50,6 @@ export const CreateTournament = () => {
 
       if (response.ok) {
         alert("Torneo creado con éxito");
-        // Una vez creado el torneo, generamos los partidos
         handleGenerateMatches(data.uuid);
       } else {
         throw new Error(data.message);
@@ -64,7 +60,6 @@ export const CreateTournament = () => {
     }
   };
 
-  // Función para generar los partidos después de crear el torneo
   const handleGenerateMatches = async (tournamentUuid) => {
     try {
       const response = await Api.post("tournament/generate-matches", {
@@ -73,7 +68,7 @@ export const CreateTournament = () => {
       const data = await response.json();
       if (response.ok) {
         alert("Partidos generados con éxito");
-        navigate(`/tournaments/${tournamentUuid}`); // Navega a la vista de detalle del torneo
+        navigate(`/tournaments/${tournamentUuid}`);
       } else {
         throw new Error(data.message);
       }
@@ -83,7 +78,6 @@ export const CreateTournament = () => {
     }
   };
 
-  // Función para seleccionar/deseleccionar equipos
   const handleTeamSelection = (teamUuid) => {
     if (selectedTeams.includes(teamUuid)) {
       setSelectedTeams(selectedTeams.filter((uuid) => uuid !== teamUuid));

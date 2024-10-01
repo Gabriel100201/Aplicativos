@@ -6,10 +6,9 @@ export const TournamentsList = () => {
   const [tournaments, setTournaments] = useState([]);
   const navigate = useNavigate();
 
-  // Función para obtener todos los torneos del backend
   const fetchTournaments = async () => {
     try {
-      const response = await Api.get('tournament'); // Suponiendo que este es el endpoint de torneos
+      const response = await Api.get('tournament');
       const data = await response.json();
 
       if (response.ok) {
@@ -39,7 +38,7 @@ export const TournamentsList = () => {
               <li
                 key={tournament.uuid}
                 className="cursor-pointer text-blue-600 hover:underline"
-                onClick={() => navigate(`/tournaments/${tournament.uuid}`)} // Navega a la página de detalles del torneo
+                onClick={() => navigate(`/tournaments/${tournament.uuid}`)}
               >
                 {tournament.name}
               </li>

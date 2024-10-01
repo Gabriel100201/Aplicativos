@@ -31,7 +31,6 @@ export const CreateTeam = () => {
     });
 
     try {
-      // Enviar los datos al backend
       const response = await Api.post('team', { body: newTeam });
       const data = await response.json();
       if (response.ok) {

@@ -60,12 +60,10 @@ export class TournamentService {
     return this.tournamentData.getForUuid(uuid);
   }
 
-  // Generar partidos
   async generateMatches(uuid) {
     return this.tournamentData.generateMatches(uuid);
   }
 
-  // Guardar resultados
   async saveResults(uuid, matches) {
     if (!uuid || !matches) {
       throw new MissingParameterError('uuid o matches');

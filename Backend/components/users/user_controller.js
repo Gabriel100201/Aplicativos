@@ -29,7 +29,6 @@ export class UserController {
     }
   }
 
-  // Método para eliminar un usuario por uuid
   async delete(req, res) {
     checkPermission(req, 'admin');
 
@@ -46,7 +45,6 @@ export class UserController {
     }
   }
 
-  // Método para actualizar un usuario por uuid
   async update(req, res) {
     checkPermission(req, 'admin');
 

@@ -3,18 +3,17 @@ import { useParams } from "react-router-dom";
 import { Api } from "../services/Api";
 
 export const TournamentDetail = () => {
-  const { tournamentId } = useParams(); // Obtener el ID del torneo desde la URL
+  const { tournamentId } = useParams();
   const [tournament, setTournament] = useState(null);
   const [matches, setMatches] = useState([]);
   const [fetchTournaments, setFetchTournaments] = useState(false);
-  // Función para obtener los detalles del torneo desde el backend
+
   const fetchTournamentDetails = async () => {
     try {
       const response = await Api.post(`tournament/${tournamentId}`);
       const data = await response.json();
 
       if (response.ok) {
-        // Formatear los partidos para dividir el resultado inicial (si existe)
         const formattedMatches = data.matches.map((match) => {
           if (match.result) {
             const [resultA, resultB] = match.result.split("-").map(Number);
@@ -23,7 +22,7 @@ export const TournamentDetail = () => {
           return match;
         });
         setTournament(data);
-        setMatches(formattedMatches); // Suponiendo que la respuesta incluye los partidos
+        setMatches(formattedMatches);
       } else {
         throw new Error(data.message);
       }
@@ -32,7 +31,6 @@ export const TournamentDetail = () => {
     }
   };
 
-  // Obtener los detalles del torneo al montar el componente
   useEffect(() => {
     fetchTournamentDetails();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,17 +38,15 @@ export const TournamentDetail = () => {
 
   const handleResultChange = (index, team, value) => {
     const updatedMatches = [...matches];
-    updatedMatches[index][team] = value; // Actualizar los resultados
+    updatedMatches[index][team] = value;
     setMatches(updatedMatches);
   };
 
   const handleSaveResults = async () => {
-    // Formatear los resultados en el formato deseado
     const formattedMatches = matches.map((match) => {
       const resultA = parseInt(match.resultA, 10);
       const resultB = parseInt(match.resultB, 10);
 
-      // Definir el formato del resultado (por ejemplo, "1-0")
       if (isNaN(resultA) || isNaN(resultB)) {
         const result = ""
         const winner = "";
@@ -64,12 +60,11 @@ export const TournamentDetail = () => {
       }
       const result = `${resultA}-${resultB}`;
 
-      // Determinar el ganador o si fue un empate
       let winner = "draw";
       if (resultA > resultB) {
-        winner = match.teamA.uuid; // Ganador es el equipo A
+        winner = match.teamA.uuid;
       } else if (resultA < resultB) {
-        winner = match.teamB.uuid; // Ganador es el equipo B
+        winner = match.teamB.uuid;
       }
 
       return {
@@ -82,7 +77,6 @@ export const TournamentDetail = () => {
     });
 
     try {
-      // Enviar los resultados formateados al backend
       const response = await Api.post(`tournament/${tournamentId}/save-results`, {
         body: { matches: formattedMatches },
       });
@@ -123,7 +117,6 @@ export const TournamentDetail = () => {
                 <div className="flex space-x-4">
                   <div>
                     <label className="block text-sm">Resultado {match.teamA.name}</label>
-                    {/* Mostrar el resultado si existe, de lo contrario permitir la edición */}
                     {match.result ? (
                       <span>{match.result.split("-")[0]}</span>
                     ) : (

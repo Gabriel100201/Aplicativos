@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import StorageService from "../../services/storageService"; // Importa el servicio de almacenamiento
+import StorageService from "../../services/storageService";
 import Logo from "../../assets/icons/Logo-app.png";
 
 const items = [

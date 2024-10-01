@@ -1,6 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
 
-// Definición del modelo de usuario
 export const UserModel = mongoose.model(
   'User',
   new Schema({
@@ -27,7 +26,6 @@ export class UserMongo {
     }
   }
 
-  // Método para eliminar un usuario usando el UUID
   async deleteByUuid(uuid) {
     try {
       const deletedUser = await UserModel.findOneAndDelete({ uuid }).exec();
@@ -40,13 +38,12 @@ export class UserMongo {
     }
   }
 
-  // Método para actualizar un usuario usando el UUID
   async updateByUuid(uuid, updateData) {
     try {
       const updatedUser = await UserModel.findOneAndUpdate(
-        { uuid },             // Filtro: buscar por uuid
-        { $set: updateData },  // Actualizar solo los campos proporcionados
-        { new: true, runValidators: true }  // Devuelve el usuario actualizado
+        { uuid },
+        { $set: updateData },
+        { new: true, runValidators: true }
       ).exec();
 
       if (!updatedUser) {

@@ -4,13 +4,13 @@ export class UserMockup {
       uuid: 'ff39511d-a77c-49df-936f-1234567890ab',
       username: 'Admin',
       displayName: 'Administrator',
-      hashedPassword: '$2b$10$5UmYGGeKzb9L0PNtSwQIz.8sdRvKWGG9pnQ4WR5Jzk20SwsOEtQBW' // Este es solo un ejemplo, asegurate de que sea un hash valido
+      hashedPassword: '$2b$10$5UmYGGeKzb9L0PNtSwQIz.8sdRvKWGG9pnQ4WR5Jzk20SwsOEtQBW'
     },
     {
       uuid: 'b4f64d24-610d-46d5-92e7-1234567890ab',
       username: 'Pedro',
       displayName: 'Pedro pe',
-      hashedPassword: '$2b$10$FUfxu' // Este es solo un ejemplo, asegurate de que sea un hash valido
+      hashedPassword: '$2b$10$FUfxu'
     },
   ];
 

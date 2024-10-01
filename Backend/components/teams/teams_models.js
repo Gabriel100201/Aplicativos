@@ -1,14 +1,13 @@
 import mongoose, { Schema } from 'mongoose';
 
-// Definición del modelo de equipo
 export const TeamModel = mongoose.model(
   'Team',
   new Schema({
     uuid: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     logo: { type: String },
-    players: [{ name: String, position: String }], // Lista de jugadores del equipo
-    manager: { type: String }, // Entrenador del equipo
+    players: [{ name: String, position: String }],
+    manager: { type: String },
   })
 );
 

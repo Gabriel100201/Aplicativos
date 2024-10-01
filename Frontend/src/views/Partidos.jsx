@@ -1,11 +1,7 @@
 import { useState } from 'react';
 
 export const LigaProfesional = () => {
-  const [matches, setMatches] = useState([
-    { team1: 'San Lorenzo', score1: 2, team2: 'Banfield', score2: 1, minute: 'Final', events: ['29\' I. Muniain (pen.)', '51\' I. Muniain', '45+3\' B. Sepulveda (pen.)'] },
-    { team1: 'Estudiantes (LP)', score1: 1, team2: 'Def y Justicia', score2: 0, minute: '32\'', events: ['4\' G. Carrillo'] },
-    { team1: 'Godoy Cruz', score1: 0, team2: 'Huracan', score2: 1, minute: '31\'', events: ['7\' F. Rasmussen (e.c.)'] }
-  ]);
+  const [matches, setMatches] = useState([]);
 
   const addMatch = () => {
     setMatches([...matches, { team1: 'Nuevo Equipo 1', score1: 0, team2: 'Nuevo Equipo 2', score2: 0, minute: '0\'', events: [] }]);
