@@ -84,7 +84,7 @@ export const NavBar = () => {
   return (
     <header className="text-text-100 body-font bg-bg-100/20 h-20 border-b-2">
       <div className="container mx-auto flex flex-wrap flex-col md:flex-row items-center">
-        <a className="flex title-font font-medium items-center mb-4 md:mb-0">
+        <a onClick={() => navigate("/")} className="cursor-pointer flex title-font font-medium items-center mb-4 md:mb-0 ">
           <img src={Logo} className="w-20" alt="logo" />
           <span className="ml-3 text-xl">Futbolin</span>
         </a>

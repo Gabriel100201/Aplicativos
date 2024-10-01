@@ -169,7 +169,7 @@ export const CreateTeam = () => {
                 type="text"
                 id="logo"
                 onChange={handleLogoChange}
-                className="mt-1 px-3 rounded-md block w-full text-white"
+                className="mt-1 px-3 rounded-md block w-full text-black"
               />
             </div>
 

@@ -33,11 +33,11 @@ export const TournamentsList = () => {
         {tournaments.length === 0 ? (
           <p className="text-center text-gray-600">No hay torneos disponibles.</p>
         ) : (
-          <ul className="list-disc space-y-4">
+          <ul className="list-disc space-y-4 m-4">
             {tournaments.map((tournament) => (
               <li
                 key={tournament.uuid}
-                className="cursor-pointer text-blue-600 hover:underline"
+                className="cursor-pointer hover:font-bold"
                 onClick={() => navigate(`/tournaments/${tournament.uuid}`)}
               >
                 {tournament.name}

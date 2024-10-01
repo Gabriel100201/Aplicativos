@@ -3,7 +3,6 @@ import { NavBar } from './components/global/NavBar';
 import { Login } from './views/Login';
 import { Users } from './views/Users';
 import { CreateTeam } from './views/CreateTeam';
-import LigaProfesional from './views/Partidos';
 import { Home } from './views/Home';
 import { NotFound } from './components/global/404Error';
 import { CreateTournament } from './views/CreateTournament';
@@ -23,7 +22,6 @@ function App() {
           <Route path='/users' element={<Users />} />
           <Route path='/create-team' element={<CreateTeam />} />
           <Route path='/create-tournament' element={<CreateTournament />} />
-          <Route path='/partidos' element={<LigaProfesional/>} />
           <Route path='/tournaments' element={<TournamentsList />} />
           <Route path='/tournaments/:tournamentId' element={<TournamentDetail />} />
           <Route path='/positions' element={<PositionsTable />} />

@@ -90,7 +90,7 @@ export const Home = () => {
             </div>
           </div>
         </div>
-        <button onClick={() => navigate("/create")} className="flex mx-auto mt-16 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
+        <button onClick={() => navigate("/create-team")} className="flex mx-auto mt-16 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
           Comienza tu Torneo
         </button>
       </div>
