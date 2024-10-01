@@ -9,11 +9,13 @@ import { CreateTournament } from './views/CreateTournament';
 import TournamentsList from './views/TournamentsList';
 import TournamentDetail from './views/TournamentDetails';
 import PositionsTable from './views/PositionTable';
+import { Toaster } from 'sonner'
 
 
 function App() {
   return (
     <Router>
+      <Toaster richColors />
       <section className='h-[100vh]'>
         <NavBar></NavBar>
         <Routes>

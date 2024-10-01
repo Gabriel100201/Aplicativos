@@ -3,6 +3,7 @@ import { UserTable } from "../components/Users/UserTable";
 import { UserForm } from "../components/Users/UserForm";
 import { fetchUsers, createUser, updateUser, deleteUser } from "../services/userServices";
 import { FaPlus } from "react-icons/fa6";
+import { toast } from "sonner";
 
 export const Users = () => {
   const [users, setUsers] = useState([]);
@@ -47,7 +48,7 @@ export const Users = () => {
   const handleDeleteUser = (uuid) => {
     deleteUser(uuid)
       .then(() => {
-        alert("Usuario eliminado correctamente");
+        toast.info("Usuario eliminado correctamente");
         loadUsers();
       })
       .catch((error) => console.error("Error al eliminar el usuario:", error.message));

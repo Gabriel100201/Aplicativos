@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Api } from "../services/Api";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export const CreateTournament = () => {
   const [name, setName] = useState("");
@@ -31,7 +32,7 @@ export const CreateTournament = () => {
     e.preventDefault();
 
     if (selectedTeams.length < 2) {
-      alert("Debes seleccionar al menos dos equipos para crear un torneo.");
+      toast.error("Debes seleccionar al menos dos equipos para crear un torneo.");
       return;
     }
 
@@ -49,14 +50,14 @@ export const CreateTournament = () => {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Torneo creado con éxito");
+        toast.success("Torneo creado con éxito");
         handleGenerateMatches(data.uuid);
       } else {
         throw new Error(data.message);
       }
     } catch (error) {
       console.error("Error al crear el torneo:", error);
-      alert("Error al crear el torneo.");
+      toast.success("Error al crear el torneo.");
     }
   };
 
@@ -67,14 +68,14 @@ export const CreateTournament = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        alert("Partidos generados con éxito");
+        toast.success("Partidos generados con éxito");
         navigate(`/tournaments/${tournamentUuid}`);
       } else {
         throw new Error(data.message);
       }
     } catch (error) {
       console.error("Error al generar los partidos:", error);
-      alert("Error al generar los partidos.");
+      toast.error("Error al generar los partidos.");
     }
   };
 

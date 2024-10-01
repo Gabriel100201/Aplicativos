@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Api } from "../services/Api";
 import { TeamList } from "../components/Teams/TeamList";
+import { toast } from "sonner";
 
 
 export const CreateTeam = () => {
@@ -34,7 +35,7 @@ export const CreateTeam = () => {
       const response = await Api.post('team', { body: newTeam });
       const data = await response.json();
       if (response.ok) {
-        alert('Equipo cargado correctamente');
+        toast.success('Equipo cargado correctamente');
         setNombre('');
         setDescripcion('');
         setDt('');
@@ -46,7 +47,7 @@ export const CreateTeam = () => {
       }
     } catch (error) {
       console.error('Error al cargar el equipo:', error);
-      alert('Ocurrió un error al cargar el equipo');
+      toast.error('Ocurrió un error al cargar el equipo');
     }
   };
 
