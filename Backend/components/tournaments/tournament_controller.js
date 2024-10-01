@@ -7,7 +7,6 @@ export class TournamentController {
   }
 
   async get(req, res) {
-    checkPermission(req, 'admin');
 
     const tournamentList = await this.tournamentService.getList();
     res.send(tournamentList);
@@ -122,7 +121,6 @@ export class TournamentController {
   }
 
   async getPositions(req, res) {
-    checkPermission(req, 'admin');
     const { uuid } = req.params;
 
     try {
