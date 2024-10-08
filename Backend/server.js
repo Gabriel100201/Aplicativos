@@ -17,9 +17,13 @@ const router = configureMiddlewares(app);
 configureRoutes(router);
 configureSwagger(router);
 
-router.get('/', (req, res) => {
-  res.send('¡Hola Mundo!');
+app.get('*', (req, res) => {
+  res.sendFile(req.path, { root: './dist'});
 });
+
+app.all('*', (req, res) => {
+  res.status(405).send('Metodo no permitido.');
+});   
 
 app.listen(conf.port, () => {
   console.log(`El servidor está aceptando conexiones en el puerto ${conf.port}`);
