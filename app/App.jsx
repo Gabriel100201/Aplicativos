@@ -9,45 +9,64 @@ import { Pressable, Text, View } from "react-native";
 import { useEffect } from "react";
 import { Api } from "./lib/api";
 import MenuScreen from "./screens/MenuScreen";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
 
   const navigationRef = createNavigationContainerRef();
-
   const [isLogged, setIsLogged] = useState(false);
 
   const headerRight = () => (
     <Pressable style={{ marginRight: 20 }} onPress={() => navigationRef.navigate('Menu')} title="Info" color="#fff">
       <Text>Menu</Text>
     </Pressable>
-  )
-  /* 
-    useEffect(() => {
-      AsyncStorage.getItem("Authorization")
-        .then(auth => {
-          if (auth) {
-            Api.defaultHeaders.Authorization = auth
-          }
-        })
-        .catch(err => console.log(err));
-    }, []); */
+  );
 
-  /* if (!isLogged) {
+  useEffect(() => {
+    AsyncStorage.getItem("Authorization")
+      .then(auth => {
+        if (auth) {
+          Api.defaultHeaders.Authorization = auth;
+          setIsLogged(true);
+        }
+      })
+      .catch(err => console.log(err));
+  }, []);
+
+  if (!isLogged) {
     return (
-      <View><LoginScreen setIslogged={setIsLogged} /></View>
-    )
-  } */
+      <View style={{ flex: 1 }}>
+        <LoginScreen setIsLogged={setIsLogged} />
+      </View>
+    );
+  }
 
   return (
     <NavigationContainer ref={navigationRef}>
       <Background>
-        <Stack.Navigator >
-          <Stack.Screen name="Menu" component={MenuScreen} options={{ title: 'Menu', headerRight }} />
-          <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login', headerRight }} />
-          <Stack.Screen name="Users" component={UsersScreen} options={{ title: 'Usuarios', headerRight }} />
-          <Stack.Screen name="User" component={UserScreen} options={{ title: 'Usuario', headerRight }} />
+        <Stack.Navigator>
+          <Stack.Screen 
+            name="Menu"
+            component={MenuScreen}
+            options={{ title: 'Menu', headerRight }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ title: 'Login', headerRight }}
+          />
+          <Stack.Screen
+            name="Users"
+            component={UsersScreen}
+            options={{ title: 'Usuarios', headerRight }}
+          />
+          <Stack.Screen
+            name="User"
+            component={UserScreen}
+            options={{ title: 'Usuario', headerRight }}
+          />
         </Stack.Navigator>
       </Background>
     </NavigationContainer>

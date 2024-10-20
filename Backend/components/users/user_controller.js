@@ -8,9 +8,15 @@ export class UserController {
 
   async get(req, res) {
     checkPermission(req, 'admin');
-    
-    const userList = await this.userService.getList();
-    res.send(userList); 
+    const uuid = req.query.uuid;
+    if (uuid) {
+      const user = await this.userService.getForUuidOrNull(uuid);
+      res.send(user);
+    }
+    else {
+      const userList = await this.userService.getList();
+      res.send(userList); 
+    }
   }
 
   async post(req, res) {

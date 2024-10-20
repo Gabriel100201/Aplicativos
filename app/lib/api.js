@@ -21,8 +21,10 @@ export const Api = {
     return fetch(`${URL_BASE}/${service}`, options);
   },
 
-  get: async (service, options) => {
-    return Api.fetch(service, { ...options, method: "GET" });
+  get: async (service, options = {}) => {
+    const params = new URLSearchParams(options).toString();
+    console.log(`${service}?${params}`);
+    return Api.fetch(`${service}?${params}`, { method: "GET" });
   },
 
   post: async (service, options) => {

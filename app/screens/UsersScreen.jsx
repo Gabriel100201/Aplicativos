@@ -3,33 +3,21 @@ import { Button, FlatList, View } from "react-native";
 import styles from "../lib/styles";
 import { useEffect, useState } from "react";
 import { Text } from "react-native";
+import { Api } from "../lib/api";
 
-const fetchUsers = () => {
-  const data = [
-    {
-      uuid: 1,
-      username: 'admin',
-      displayName: 'Administrador',
-      roles: 'admin',
-      isEnabled: true
-    },
-    {
-      uuid: 2,
-      username: 'user',
-      displayName: 'Usuario',
-      roles: 'user',
-      isEnabled: true
-    }
-  ];
-  return data;
-}
+
 
 export default function Users({ navigation }) {
   const [users, setUsers] = useState([]);
 
+  const loadUsers = async () => {
+    const data = await Api.get('user').then(res => res.json());
+    console.log(data);
+    setUsers(data);
+  }
+
   useEffect(() => {
-    const users = fetchUsers();
-    setUsers(users);
+    loadUsers()
   }, [])
 
 

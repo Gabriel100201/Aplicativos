@@ -3,10 +3,15 @@ import { View, Text, Image } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import styles from '../lib/styles';
 import { Api } from '../lib/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function LoginScreen() {
+export default function LoginScreen({ setIsLogged }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const handleLogin = (status) => {
+    setIsLogged(status);
+  };
 
   function Login() {
     console.log('Login pressed');
@@ -19,17 +24,21 @@ export default function LoginScreen() {
       .then(res => res.json())
       .then(res => {
         if (res.error) {
-          console.log(res.message);
+          AsyncStorage.removeItem('Authorization');
+          handleLogin(false);
         } else {
-          console.log(res.authorizationToken);
           const auth = `Bearer ${res.authorizationToken}`;
           const roles = res.roles || [];
 
           Api.defaultHeaders.Authorization = auth;
+          AsyncStorage.setItem('Authorization', auth);
+          AsyncStorage.setItem('roles', JSON.stringify(roles));
+          handleLogin(true);
         }
       })
       .catch(err => {
         console.log(err);
+        handleLogin(false);
       });
   }
 
