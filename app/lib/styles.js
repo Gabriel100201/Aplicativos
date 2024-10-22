@@ -28,12 +28,13 @@ const styles = StyleSheet.create({
   },
 
   containerDetalleTorneo: {
+    borderWidth: 1,
+    borderColor: "#ccc",
     borderRadius: 40,
-    width: "90%",
-    backgroundColor: "#e0e0e0",
-    boxShadow: "15px 15px 30px #bebebe, -15px -15px 30px #ffffff",
+    width: "95%",
+    backgroundColor: "#fff",
     padding: 50,
-    marginTop: 200,
+    marginTop: 50,
     marginBottom: 30,
   },
 
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
     color: "#222",
-    marginVertical: 30,
+    marginVertical: 10,
     textAlign: "center",
   },
 
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
 
   inputField: {
     marginBottom: 15,
-    width: "100%",
+    width: 200,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,

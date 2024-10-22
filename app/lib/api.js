@@ -1,24 +1,29 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import URL_BASE from "../config/URLs";
 
 export const Api = {
   defaultHeaders: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 
   fetch: async (service, options) => {
     options = { headers: {}, ...options };
     options.headers = { ...Api.defaultHeaders, ...options.headers };
 
-    const token = localStorage.getItem('token');
+    try {
+      const token = await AsyncStorage.getItem("token");
 
-    if (token) {
-      options.headers['Authorization'] = `Bearer ${token}`;
-    }
+      if (token) {
+        options.headers["Authorization"] = `Bearer ${token}`;
+      }
 
-    if (options.body && typeof options.body !== "string") {
-      options.body = JSON.stringify(options.body);
+      if (options.body && typeof options.body !== "string") {
+        options.body = JSON.stringify(options.body);
+      }
+      return fetch(`${URL_BASE}/${service}`, options);
+    } catch (error) {
+      return error.message;
     }
-    return fetch(`${URL_BASE}/${service}`, options);
   },
 
   get: async (service, options = {}) => {
