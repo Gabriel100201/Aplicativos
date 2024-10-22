@@ -60,7 +60,7 @@ export const TournamentDetail = () => {
       }
       const result = `${resultA}-${resultB}`;
 
-      let winner = "draw";
+      let winner = "Empate";
       if (resultA > resultB) {
         winner = match.teamA.uuid;
       } else if (resultA < resultB) {

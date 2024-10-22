@@ -1,5 +1,5 @@
 import FormTitle from "../components/FormTitle";
-import { Button, FlatList, View } from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import styles from "../lib/styles";
 import { useEffect, useState } from "react";
 import { Text } from "react-native";
@@ -29,11 +29,22 @@ export default function Users({ navigation }) {
       <FormTitle>Lista de usuarios</FormTitle>
       <FlatList style={{ width: '100%' }} data={users} key={user => user.uuid} renderItem={({ item }) => (
         <View style={styles.listItem}>
-          <Text style={styles.userText}>Usuario: {item.username}</Text>
-          <Text style={styles.userText}>Nombre: {item.displayName}</Text>
-          <Text style={styles.userText}>Roles: {item.roles}</Text>
-          <Text style={styles.userText}>Habilitado: {item.isEnabled ? 'Si' : 'No'}</Text>
-          <Button style={styles.button}title="Ver" onPress={() => viewUser(item.uuid)} />
+          <Text style={styles.userText}>
+            <Text style={{ fontWeight: 'bold' }}>Usuario: </Text>{item.username}
+          </Text>
+          <Text style={styles.userText}>
+            <Text style={{ fontWeight: 'bold' }}>Nombre: </Text>{item.displayName}
+          </Text>
+          <Text style={styles.userText}>
+            <Text style={{ fontWeight: 'bold' }}>UserName: </Text>{item.username}
+          </Text>
+          <Text style={styles.userText}>
+            <Text style={{ fontWeight: 'bold' }}>Roles: </Text>{item.roles}
+          </Text>
+          <Text style={styles.userText}>
+            <Text style={{ fontWeight: 'bold' }}>Habilitado: </Text>{item.isEnabled ? 'Si' : 'No'}
+          </Text>
+          <TouchableOpacity style={styles.buttonList} onPress={() => viewUser(item.uuid)}> <Text style={styles.text}>VER</Text> </TouchableOpacity>
         </View>
       )} />
     </View>

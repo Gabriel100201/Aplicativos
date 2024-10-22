@@ -9,10 +9,28 @@ const styles = StyleSheet.create({
   },
 
   containerMenu: {
-    backgroundColor: 'transparent',
-    borderColor: 'green',
-    borderWidth: 2,
-    padding: 80,
+    borderRadius: 40,
+    backgroundColor: '#e0e0e0',
+    boxShadow: '15px 15px 30px #bebebe, -15px -15px 30px #ffffff',
+    padding: 70,
+  },
+
+  containerTorneo: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    width: '100%',
+    overflow: 'auto',
+  },
+
+  containerDetalleTorneo: {
+    borderRadius: 40,
+    width: '70%',
+    backgroundColor: '#e0e0e0',
+    boxShadow: '15px 15px 30px #bebebe, -15px -15px 30px #ffffff',
+    padding: 50,
+    marginVertical:20,
   },
 
   overlay: {
@@ -70,6 +88,14 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     color: '#fff',
+    textAlign: 'center',
+  },
+
+  buttonList:{
+    backgroundColor: '#006400',
+    paddingVertical: 5,
+    marginVertical: 10,
+    borderRadius: 10,
   },
 
   listItem: {
@@ -83,7 +109,7 @@ const styles = StyleSheet.create({
   },
 
   userText: {
-    fontSize: 20,
+    fontSize: 18,
     marginBottom: 5,
     color: '#222',
   },

@@ -17,14 +17,23 @@ export default function User({ route }) {
   }, [])
 
   return (
-    <View style={styles.container}>
-      <View style={styles.containerMenu}>
-      <Text style={styles.title}>Informacion del usuario</Text>
-      <Text style={styles.userText}>Nombre: {user.displayName}</Text>
-      <Text style={styles.userText}>UserName: {user.username}</Text>
-      <Text style={styles.userText}>Roles: {user.roles}</Text>
-      <Text style={styles.userText}>Hablitado: {user.isEnabled ? 'Si' : 'No'}</Text>
-      </View>
-    </View>
+  <View style={styles.container}>
+  <View style={styles.containerMenu}>
+    <Text style={styles.title}>Informacion del usuario</Text>
+    <Text style={styles.userText}>
+      <Text style={{ fontWeight: 'bold' }}>Nombre: </Text>{user.displayName}
+    </Text>
+    <Text style={styles.userText}>
+      <Text style={{ fontWeight: 'bold' }}>UserName: </Text>{user.username}
+    </Text>
+    <Text style={styles.userText}>
+      <Text style={{ fontWeight: 'bold' }}>Roles: </Text>{user.roles}
+    </Text>
+    <Text style={styles.userText}>
+      <Text style={{ fontWeight: 'bold' }}>Habilitado: </Text>{user.isEnabled ? 'Si' : 'No'}
+    </Text>
+  </View>
+</View>
+
   );
 }

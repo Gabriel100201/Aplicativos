@@ -1,5 +1,4 @@
 import { Text, View } from "react-native";
-import FormTitle from "../components/FormTitle";
 import styles from "../lib/styles";
 import { useEffect, useState } from "react";
 import { Api } from "../lib/api";
@@ -30,28 +29,45 @@ export default function Tournament({ route }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Detalles del Torneo</Text>
-      <Text style={styles.userText}>Nombre del Torneo: {tournament.name}</Text>
-      <Text style={styles.userText}>Descripción: {tournament.description || 'Sin descripción'}</Text>
+    <View style={styles.containerTorneo}>
+      <View style={styles.containerDetalleTorneo}>
+        <Text style={styles.title}>Detalles del Torneo</Text>
+      
+        <Text style={styles.userText}>
+          <Text style={{ fontWeight: 'bold' }}>Nombre del Torneo: </Text>{tournament.name}
+        </Text>
+        <Text style={styles.userText}>
+          <Text style={{ fontWeight: 'bold' }}>Descripcion: </Text>{tournament.description || 'Sin descripción'}
+        </Text>
+        <Text style={styles.userText}>
+          <Text style={{ fontWeight: 'bold' }}>Equipos participantes: </Text>{tournament.teams ? tournament.teams.length : 0}
+        </Text>
+        {tournament.teams && tournament.teams.length > 0 && (
+        <Text style={styles.userText}>
+          <Text style={{ fontWeight: 'bold' }}>Lista de Equipos:  </Text>{tournament.teams.map(getTeamName).join('  -  ')}
+        </Text>
+        )}
+        <Text style={styles.userText}>
+          <Text style={{ fontWeight: 'bold' }}>Partidos jugados: </Text>{tournament.matches ? tournament.matches.length : 0}
+        </Text>
+      </View>    
+        {tournament.matches && tournament.matches.map((match, index) => (
+      <View key={index} style={styles.listItem}>
 
-      <Text style={styles.userText}>Equipos participantes: {tournament.teams ? tournament.teams.length : 0}</Text>
+        <Text style={styles.userText}>
+          <Text style={{ fontWeight: 'bold' }}>Partido {index + 1} </Text>
+        </Text>
+        
+          <Text style={styles.userText}><Text style={{ fontWeight: 'bold' }}>{getTeamName(match.teamA.name)}</Text>  vs   <Text style={{ fontWeight: 'bold' }}>{getTeamName(match.teamB.name)}</Text></Text>
 
-      {tournament.teams && tournament.teams.length > 0 && (
-        <Text style={styles.userText}>Lista de Equipos: {tournament.teams.map(getTeamName).join(', ')}</Text>
-      )}
+        <Text style={styles.userText}>
+          <Text style={{ fontWeight: 'bold' }}>Resultado: </Text>{match.result || 'Sin resultado'} 
+        </Text>
 
-      <Text style={styles.userText}>Partidos jugados: {tournament.matches ? tournament.matches.length : 0}</Text>
-
-      {tournament.matches && tournament.matches.map((match, index) => (
-        <View key={index} style={styles.listItem}>
-          <Text>Partido {index + 1}:</Text>
-
-          <Text>{getTeamName(match.teamA.name) + ' vs ' + getTeamName(match.teamB.name)}</Text>
-
-          <Text>Resultado: {match.result || 'Sin resultado'}</Text>
-          <Text>Ganador: {getTeamName(match.winner) || 'No definido'}</Text>
-        </View>
+        <Text style={styles.userText}>
+          <Text style={{ fontWeight: 'bold' }}>Ganador: </Text> {getTeamName(match.winner) || 'No definido'} 
+        </Text>
+      </View>
       ))}
     </View>
   );

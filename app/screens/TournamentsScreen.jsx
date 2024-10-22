@@ -1,5 +1,5 @@
 import FormTitle from "../components/FormTitle";
-import { Button, FlatList, View } from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import styles from "../lib/styles";
 import { useEffect, useState } from "react";
 import { Text } from "react-native";
@@ -30,10 +30,16 @@ export default function TournamentsScreen({ navigation }) {
         keyExtractor={tournament => tournament.uuid}
         renderItem={({ item }) => (
           <View style={styles.listItem}>
-            <Text>Nombre del torneo: {item.name}</Text>
-            <Text>Descripción: {item.description || 'Sin descripción'}</Text>
-            <Text>Equipos participantes: {item.teams.length}</Text>
-            <Button title="Ver" onPress={() => viewTournament(item.uuid)} />
+            <Text style={styles.userText}>
+              <Text style={{ fontWeight: 'bold' }}>Nombre del torneo: </Text>{item.name}
+            </Text>
+            <Text style={styles.userText}>
+              <Text style={{ fontWeight: 'bold' }}>Descripción: </Text>{item.description || 'Sin descripción'}
+            </Text>
+            <Text style={styles.userText}>
+              <Text style={{ fontWeight: 'bold' }}>Equipos participantes: </Text>{item.teams.length}
+            </Text>
+            <TouchableOpacity style={styles.buttonList} onPress={() => viewTournament(item.uuid)}> <Text style={styles.text}>VER</Text> </TouchableOpacity>
           </View>
         )}
       />
