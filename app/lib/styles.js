@@ -8,6 +8,13 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
+  containerMenu: {
+    backgroundColor: 'transparent',
+    borderColor: 'green',
+    borderWidth: 2,
+    padding: 80,
+  },
+
   overlay: {
     flex: 1,
     justifyContent: 'center',
@@ -22,11 +29,12 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#222',
     marginBottom: 30,
     textAlign: 'center',
+   
   },
 
   input: {
@@ -42,7 +50,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#006400',
     paddingHorizontal: 20,
-    paddingVertical: 7,
+    paddingVertical: 10,
     marginVertical: 10,
     borderRadius: 7,
   },
@@ -75,8 +83,7 @@ const styles = StyleSheet.create({
   },
 
   userText: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 20,
     marginBottom: 5,
     color: '#222',
   },

@@ -5,6 +5,7 @@ import Button from "../components/Button";
 export default function MenuScreen({ navigation }) {
   return (
     <View style={styles.container}>
+      <View style={styles.containerMenu}>
       <Text style={styles.title}>Menu</Text>
       <Button
         onPress={() => navigation.navigate('Tournaments')}
@@ -14,6 +15,7 @@ export default function MenuScreen({ navigation }) {
       <Button onPress={() => navigation.navigate('Users')}>
         Usuarios
       </Button>
+      </View>
     </View>
   );
 }

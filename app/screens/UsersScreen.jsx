@@ -29,11 +29,11 @@ export default function Users({ navigation }) {
       <FormTitle>Lista de usuarios</FormTitle>
       <FlatList style={{ width: '100%' }} data={users} key={user => user.uuid} renderItem={({ item }) => (
         <View style={styles.listItem}>
-          <Text>Usuario: {item.username}</Text>
-          <Text>Nombre: {item.displayName}</Text>
-          <Text>Roles: {item.roles}</Text>
-          <Text>Habilitado: {item.isEnabled ? 'Si' : 'No'}</Text>
-          <Button title="Ver" onPress={() => viewUser(item.uuid)} />
+          <Text style={styles.userText}>Usuario: {item.username}</Text>
+          <Text style={styles.userText}>Nombre: {item.displayName}</Text>
+          <Text style={styles.userText}>Roles: {item.roles}</Text>
+          <Text style={styles.userText}>Habilitado: {item.isEnabled ? 'Si' : 'No'}</Text>
+          <Button style={styles.button}title="Ver" onPress={() => viewUser(item.uuid)} />
         </View>
       )} />
     </View>
