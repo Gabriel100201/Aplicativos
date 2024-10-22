@@ -7,7 +7,7 @@ export default function MenuScreen({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.title}>Menu</Text>
       <Button
-        onPress={() => navigation.navigate('Torneos')}
+        onPress={() => navigation.navigate('Tournaments')}
       >
         Torneos
       </Button>

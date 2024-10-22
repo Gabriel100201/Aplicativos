@@ -7,7 +7,6 @@ export class TournamentController {
   }
 
   async get(req, res) {
-
     const tournamentList = await this.tournamentService.getList();
     res.send(tournamentList);
   }

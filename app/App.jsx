@@ -11,6 +11,8 @@ import { Api } from "./lib/api";
 import MenuScreen from "./screens/MenuScreen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from "./components/Button";
+import TournamentsScreen from "./screens/TournamentsScreen";
+import TournamentScreen from "./screens/TournamentScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -67,6 +69,16 @@ export default function App() {
             name="User"
             component={UserScreen}
             options={{ title: 'Usuario', headerRight }}
+          />
+          <Stack.Screen
+            name="Tournaments"
+            component={TournamentsScreen}
+            options={{ title: 'Torneos', headerRight }}
+          />
+          <Stack.Screen
+            name="Tournament"
+            component={TournamentScreen}
+            options={{ title: 'Torneo', headerRight }}
           />
         </Stack.Navigator>
       </Background>

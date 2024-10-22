@@ -23,7 +23,6 @@ export const Api = {
 
   get: async (service, options = {}) => {
     const params = new URLSearchParams(options).toString();
-    console.log(`${service}?${params}`);
     return Api.fetch(`${service}?${params}`, { method: "GET" });
   },
 
