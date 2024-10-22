@@ -12,7 +12,6 @@ export default function Users({ navigation }) {
 
   const loadUsers = async () => {
     const data = await Api.get('user').then(res => res.json());
-    console.log(data);
     setUsers(data);
   }
 
@@ -26,7 +25,7 @@ export default function Users({ navigation }) {
   }
 
   return (
-    <View style={{ width: '90%' }}>
+    <View style={styles.container}>
       <FormTitle>Lista de usuarios</FormTitle>
       <FlatList style={{ width: '100%' }} data={users} key={user => user.uuid} renderItem={({ item }) => (
         <View style={styles.listItem}>

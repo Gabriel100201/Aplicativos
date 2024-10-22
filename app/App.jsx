@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { Api } from "./lib/api";
 import MenuScreen from "./screens/MenuScreen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Button from "./components/Button";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,9 +19,14 @@ export default function App() {
   const navigationRef = createNavigationContainerRef();
   const [isLogged, setIsLogged] = useState(false);
 
+  const hanldeCloseSesion = () => {
+    AsyncStorage.removeItem("Authorization");
+    setIsLogged(false);
+  }
+
   const headerRight = () => (
     <Pressable style={{ marginRight: 20 }} onPress={() => navigationRef.navigate('Menu')} title="Info" color="#fff">
-      <Text>Menu</Text>
+      <Button onPress={hanldeCloseSesion}>Cerrar Sesión</Button>
     </Pressable>
   );
 
@@ -51,11 +57,6 @@ export default function App() {
             name="Menu"
             component={MenuScreen}
             options={{ title: 'Menu', headerRight }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{ title: 'Login', headerRight }}
           />
           <Stack.Screen
             name="Users"

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, Image } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
 import styles from '../lib/styles';
 import { Api } from '../lib/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import TextField from '../components/TextField'; // Importa el nuevo componente
+import Button from '../components/Button';
 
 export default function LoginScreen({ setIsLogged }) {
   const [username, setUsername] = useState('');
@@ -42,7 +43,6 @@ export default function LoginScreen({ setIsLogged }) {
       });
   }
 
-
   return (
     <View style={styles.container}>
 
@@ -53,23 +53,19 @@ export default function LoginScreen({ setIsLogged }) {
 
       <Text style={styles.title}>Iniciar Sesión</Text>
 
-      <TextInput
+      <TextField
         label="Usuario"
         value={username}
-        mode="outlined"
         onChangeText={setUsername}
-        style={styles.input}
-        theme={{ colors: { text: '#000', placeholder: '#fff' } }}
+        style={styles.inputField}
       />
 
-      <TextInput
+      <TextField
         label="Contraseña"
         value={password}
-        mode="outlined"
-        secureTextEntry
         onChangeText={setPassword}
-        style={styles.input}
-        theme={{ colors: { text: '#000', placeholder: '#999' } }}
+        secureTextEntry={true}
+        style={styles.inputField}
       />
 
       <Button

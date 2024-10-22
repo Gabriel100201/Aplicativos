@@ -18,11 +18,11 @@ export default function User({ route }) {
 
   return (
     <View style={styles.container}>
-      <FormTitle>Editar un usuario</FormTitle>
-      <Text style={styles.text}>Nombre: {user.displayName}</Text>
-      <Text style={styles.text}>UserName: {user.username}</Text>
-      <Text style={styles.text}>Roles: {user.roles}</Text>
-      <Text style={styles.text}>Hablitado: {user.isEnabled ? 'Si' : 'No'}</Text>
+      <Text style={styles.title}>Editar un usuario</Text>
+      <Text style={styles.userText}>Nombre: {user.displayName}</Text>
+      <Text style={styles.userText}>UserName: {user.username}</Text>
+      <Text style={styles.userText}>Roles: {user.roles}</Text>
+      <Text style={styles.userText}>Hablitado: {user.isEnabled ? 'Si' : 'No'}</Text>
     </View>
   );
 }

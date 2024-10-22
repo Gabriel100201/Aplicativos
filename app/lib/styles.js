@@ -15,6 +15,12 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 
+  label: {
+    fontSize: 16,
+    color: '#222',
+    marginBottom: 10,
+  },
+
   title: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -24,9 +30,13 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    marginBottom: 20,
-    backgroundColor: '#fff',
-    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    color: '#333',
   },
 
   button: {
@@ -62,6 +72,29 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
     width: '100%',
+  },
+
+  userText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: '#222',
+  },
+
+  field: {
+    marginBottom: 15,
+  },
+
+  inputField: {
+    marginBottom: 15,
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    color: '#333',
   },
 });
 
