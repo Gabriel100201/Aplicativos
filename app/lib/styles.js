@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    marginVertical: 20,
   },
 
   containerMenu: {
@@ -13,6 +14,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e0e0e0',
     boxShadow: '15px 15px 30px #bebebe, -15px -15px 30px #ffffff',
     padding: 70,
+    width: '80%',
   },
 
   containerTorneo: {
@@ -26,11 +28,12 @@ const styles = StyleSheet.create({
 
   containerDetalleTorneo: {
     borderRadius: 40,
-    width: '70%',
+    width: '90%',
     backgroundColor: '#e0e0e0',
     boxShadow: '15px 15px 30px #bebebe, -15px -15px 30px #ffffff',
     padding: 50,
-    marginVertical:20,
+    marginTop: 200,
+    marginBottom: 30,
   },
 
   overlay: {
@@ -50,7 +53,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     color: '#222',
-    marginBottom: 30,
+    marginVertical: 30,
     textAlign: 'center',
    
   },
@@ -75,7 +78,7 @@ const styles = StyleSheet.create({
 
   background: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#e0e0e0',
   },
 
   logo: {

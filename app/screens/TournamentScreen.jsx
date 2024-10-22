@@ -2,6 +2,7 @@ import { Text, View } from "react-native";
 import styles from "../lib/styles";
 import { useEffect, useState } from "react";
 import { Api } from "../lib/api";
+import Background from "../components/Background";
 
 export default function Tournament({ route }) {
   const [tournament, setTournament] = useState({});
@@ -24,11 +25,15 @@ export default function Tournament({ route }) {
 
 
   const getTeamName = (teamUuid) => {
+    if (teamUuid === 'draw') {
+      return 'Empate';
+    }
     const team = teams.find(t => t.uuid === teamUuid);
     return team ? team.name : teamUuid;
   };
 
   return (
+    <Background>
     <View style={styles.containerTorneo}>
       <View style={styles.containerDetalleTorneo}>
         <Text style={styles.title}>Detalles del Torneo</Text>
@@ -70,5 +75,6 @@ export default function Tournament({ route }) {
       </View>
       ))}
     </View>
+    </Background>
   );
 }

@@ -5,6 +5,7 @@ import { Api } from '../lib/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TextField from '../components/TextField'; // Importa el nuevo componente
 import Button from '../components/Button';
+import Background from '../components/Background';
 
 export default function LoginScreen({ setIsLogged }) {
   const [username, setUsername] = useState('');
@@ -44,6 +45,7 @@ export default function LoginScreen({ setIsLogged }) {
   }
 
   return (
+    <Background>
     <View style={styles.container}>
 
       <Image
@@ -77,5 +79,6 @@ export default function LoginScreen({ setIsLogged }) {
         Iniciar Sesión
       </Button>
     </View>
+    </Background>
   );
 }

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { createNavigationContainerRef, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Background from "./components/Background";
 import LoginScreen from "./screens/LoginScreen";
 import UsersScreen from "./screens/UsersScreen";
 import UserScreen from "./screens/UserScreen";
@@ -53,7 +52,6 @@ export default function App() {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      <Background>
         <Stack.Navigator>
           <Stack.Screen 
             name="Menu"
@@ -80,8 +78,7 @@ export default function App() {
             component={TournamentScreen}
             options={{ title: 'Torneo', headerRight }}
           />
-        </Stack.Navigator>
-      </Background>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
